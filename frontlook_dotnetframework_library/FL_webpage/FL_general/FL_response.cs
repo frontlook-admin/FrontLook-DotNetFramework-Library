@@ -11,16 +11,17 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
         public static string FL_message(string message)
         {
             return "<script language='javascript'>" +
-                   "window.alert('Salary Head Is Already Present With Name " +
+                   "window.alert('" +
                    message + "');" +
                    "</script>";
         }
 
-        public static string FL_message_and_redirect(string message)
+        public static string FL_message(string message, string redirect)
         {
             return "<script language='javascript'>" +
                    "window.alert('Salary Head Is Already Present With Name " +
                    message + "');" +
+                   "window.location='" + redirect + "';" +
                    "</script>";
         }
     }
