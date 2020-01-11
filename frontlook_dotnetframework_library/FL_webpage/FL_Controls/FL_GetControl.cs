@@ -50,5 +50,50 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                 return null;
             }
         }
+
+        /// <summary>
+        /// For DropDownList And TextBox
+        /// </summary>
+        /// <param name="ParentControl"></param>
+        /// <param name="ChildId"></param>
+        /// <param name="value"></param>
+        /// <param name="ddl_string_reqd"></param>
+        public static void FL_SetControlString(Control ParentControl, string ChildId, string value, string ddl_string_reqd = null)
+        {
+            var ChildControl = ParentControl.FindControl(ChildId);
+            if (ChildControl is ITextControl)
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    ((ITextControl)ChildControl).Text = value;
+                }
+                else
+                {
+                    ((ITextControl)ChildControl).Text = "";
+                }
+            }
+            else if (ChildControl is DropDownList)
+            {
+                if (!String.IsNullOrEmpty(ddl_string_reqd))
+                {
+                    if (String.Equals(ddl_string_reqd, "item"))
+                    {
+                        ((DropDownList)ChildControl).Items.FindByText(value);
+                    }
+                    else if (String.Equals(ddl_string_reqd, "value"))
+                    {
+                        ((DropDownList)ChildControl).Items.FindByValue(value);
+                    }
+                    else
+                    {
+                        ((DropDownList)ChildControl).Items.FindByText(value);
+                    }
+                }
+                else
+                {
+                    ((DropDownList)ChildControl).Items.FindByText(value);
+                }
+            }
+        }
     }
 }

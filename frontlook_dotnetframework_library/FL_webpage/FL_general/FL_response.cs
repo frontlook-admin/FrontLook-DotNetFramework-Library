@@ -18,13 +18,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
         /// <code>FL_message(message)</code>
         /// <example>FL_message(message)</example>
         /// <param name="message">Message Parameter</param>
-        public static string FL_message(string message)
+        /*public static string FL_message(this string message)
         {
             return "<script language='javascript'>" +
                    "window.alert('" +
                    message + "');" +
                    "</script>";
-        }
+        }*/
 
         /// <summary>
         /// Returns Java script pop-up message in web page screen and Redirects to a new web page
@@ -35,16 +35,27 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
         /// <example>FL_message(message,redirect)</example>
         /// <param name="message">Message Parameter</param>
         /// <param name="redirect">Redirect Parameter</param>
-        public static string FL_message(string message, string redirect)
+        public static string FL_message(this string message, string redirect = null)
         {
-            return "<script language='javascript'>" +
-                   "window.alert('Salary Head Is Already Present With Name " +
-                   message + "');" +
-                   "window.location='" + redirect + "';" +
-                   "</script>";
+            if (!string.IsNullOrEmpty(redirect))
+            {
+                return "<script language='javascript'>" +
+                       "window.alert('Salary Head Is Already Present With Name " +
+                       message + "');" +
+                       "window.location='" + redirect + "';" +
+                       "</script>";
+            }
+            else
+            {
+                return "<script language='javascript'>" +
+                       "window.alert('" +
+                       message + "');" +
+                       "</script>";
+            }
+
         }
 
-        public static string FL_printmessage_to_webpage(string message)
+        public static string FL_printmessage_to_webpage(this string message)
         {
             return message;
         }
