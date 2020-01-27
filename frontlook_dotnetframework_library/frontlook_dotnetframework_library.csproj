@@ -126,14 +126,17 @@
     <Compile Include="FL_desktopapp\FL_Odbc_Helper\FL_odbc_helper.cs" />
     <Compile Include="FL_desktopapp\FL_Oledb_Helper\FL_oledb_helper.cs" />
     <Compile Include="FL_strings.cs" />
+    <Compile Include="FL_webpage\FL_Controls\FL_ControlId_Dynamic.cs" />
     <Compile Include="FL_universal\FL_DataMods.cs" />
     <Compile Include="FL_universal\FL_MathExpression.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_GetControl.cs" />
+    <Compile Include="FL_webpage\FL_Controls\FL_Label_CheckBox.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_DropDownList.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_TextBox.cs" />
     <Compile Include="FL_webpage\FL_DataBase\FL_MySql\FL_MySqlExecutor.cs" />
     <Compile Include="FL_webpage\FL_general\FL_Color.cs" />
     <Compile Include="FL_webpage\FL_general\FL_response.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

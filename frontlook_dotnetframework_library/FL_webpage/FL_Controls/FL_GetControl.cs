@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,41 +15,38 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 
         public static string FL_GetControlString(Control ParentControl, string ChildId, string ddl_string_reqd = null)
         {
-            var ChildControl = ParentControl.FindControl(ChildId);
+            var ChildControl = FL_GetChildControl(ParentControl, ChildId);
             if (ChildControl is ITextControl)
             {
                 return ((ITextControl)ChildControl).Text; // works also for the RadComboBox since it returns the currently selected item's text
             }
-            else if (ChildControl is ICheckBoxControl)
+
+            if (ChildControl is ICheckBoxControl CheckBoxControl)
             {
-                return ((ICheckBoxControl)ChildControl).Checked.ToString();
+                return (CheckBoxControl).Checked.ToString();
             }
-            else if (ChildControl is DropDownList)
+
+            if (ChildControl is DropDownList)
             {
-                if (!String.IsNullOrEmpty(ddl_string_reqd))
+                if (!string.IsNullOrEmpty(ddl_string_reqd))
                 {
-                    if (String.Equals(ddl_string_reqd, "item"))
+                    if (string.Equals(ddl_string_reqd, "item"))
                     {
                         return ((DropDownList)ChildControl).SelectedItem.ToString();
                     }
-                    else if (String.Equals(ddl_string_reqd, "value"))
+
+                    if (string.Equals(ddl_string_reqd, "value"))
                     {
-                        return ((DropDownList)ChildControl).SelectedValue.ToString();
+                        return ((DropDownList)ChildControl).SelectedValue;
                     }
-                    else
-                    {
-                        return ((DropDownList)ChildControl).SelectedItem.ToString();
-                    }
-                }
-                else
-                {
+
                     return ((DropDownList)ChildControl).SelectedItem.ToString();
                 }
+
+                return ((DropDownList)ChildControl).SelectedItem.ToString();
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -63,7 +61,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             var ChildControl = ParentControl.FindControl(ChildId);
             if (ChildControl is ITextControl)
             {
-                if (String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     ((ITextControl)ChildControl).Text = value;
                 }
@@ -72,15 +70,30 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                     ((ITextControl)ChildControl).Text = "";
                 }
             }
+            else if (ChildControl is ICheckBoxControl CheckBoxControl)
+            {
+                bool a = false;
+                bool b = true;
+                Boolean.TryParse(value, out a);
+                Boolean.TryParse(value, out b);
+                if (a.Equals(true) || b.Equals(false))
+                {
+                    CheckBoxControl.Checked = Boolean.Parse(value);
+                }
+                else
+                {
+                    CheckBoxControl.Checked = false;
+                }
+            }
             else if (ChildControl is DropDownList)
             {
-                if (!String.IsNullOrEmpty(ddl_string_reqd))
+                if (!string.IsNullOrEmpty(ddl_string_reqd))
                 {
-                    if (String.Equals(ddl_string_reqd, "item"))
+                    if (string.Equals(ddl_string_reqd, "item"))
                     {
                         ((DropDownList)ChildControl).Items.FindByText(value);
                     }
-                    else if (String.Equals(ddl_string_reqd, "value"))
+                    else if (string.Equals(ddl_string_reqd, "value"))
                     {
                         ((DropDownList)ChildControl).Items.FindByValue(value);
                     }

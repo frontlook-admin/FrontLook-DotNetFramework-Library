@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 
@@ -6,44 +7,46 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
     public static class FL_MySqlExecutor
     {
-        public static void Con_switch_on(MySqlConnection con)
+        public static void Con_switch_on(MySqlConnection Con)
         {
-            if (con.State == ConnectionState.Closed)
+            if (Con.State == ConnectionState.Closed)
             {
-                con.Open();
+                Con.Open();
             }
-            else if (con.State == ConnectionState.Broken)
+            else if (Con.State == ConnectionState.Broken)
             {
-                MySqlConnection con1 = new MySqlConnection();
-                con1.ConnectionString = con.ConnectionString;
-                con.Dispose();
-                con = con1;
-                con.Open();
+                MySqlConnection con1 = new MySqlConnection
+                {
+                    ConnectionString = Con.ConnectionString
+                };
+                Con.Dispose();
+                Con = con1;
+                Con.Open();
             }
             else
             {
-                con.Close();
-                con.Open();
+                Con.Close();
+                Con.Open();
             }
         }
 
-        public static void Con_switch_off(MySqlConnection con)
+        public static void Con_switch_off(MySqlConnection Con)
         {
-            if (con.State == ConnectionState.Open)
+            if (Con.State == ConnectionState.Open)
             {
-                con.Close();
+                Con.Close();
             }
         }
 
-        public static void Con_switch(MySqlConnection con)
+        public static void Con_switch(MySqlConnection Con)
         {
-            if (con.State == ConnectionState.Open)
+            if (Con.State == ConnectionState.Open)
             {
-                Con_switch_off(con);
+                Con_switch_off(Con);
             }
-            else if (con.State == ConnectionState.Closed)
+            else if (Con.State == ConnectionState.Closed)
             {
-                Con_switch_on(con);
+                Con_switch_on(Con);
             }
         }
 
@@ -52,13 +55,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 
         }
 
-        public static int ExecuteMySqlCommand(MySqlConnection con, MySqlCommand cmd, string query)
+        public static int ExecuteMySqlCommand(MySqlConnection Con, MySqlCommand Cmd, string Query)
         {
-            cmd.Connection = con;
-            cmd.CommandText = query;
-            Con_switch(con);
-            int r = cmd.ExecuteNonQuery();
-            Con_switch(con);
+            Cmd.Connection = Con;
+            Cmd.CommandText = Query;
+            Con_switch(Con);
+            int r = Cmd.ExecuteNonQuery();
+            Con_switch(Con);
             return r;
         }
 
@@ -130,6 +133,31 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             r.DataBind();
             Con_switch(cmd.Connection);
             return r;
+        }
+
+        public static bool FL_Check_Column_Exists(MySqlConnection con, MySqlCommand cmd, string database_name, string tableName, string columnname)
+        {
+            cmd.Connection = con;
+            cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + database_name + "' AND TABLE_NAME='" +
+                              tableName + "' and COLUMN_NAME = '" + columnname + "') as exist;";
+            Con_switch(con);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            var v = "";
+            while (reader.Read())
+            {
+                v = reader["exist"].ToString();
+            }
+            reader.Dispose();
+            reader.Close();
+            Con_switch(con);
+            if (v.Equals("0") || v.Equals(""))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /*public static bool CheckObjectExists(MySqlConnection con, MySqlCommand cmd,string database_name,string tableName, string columnname)

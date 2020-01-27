@@ -9,72 +9,70 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
     public static class FL_Label_DropDownList
     {
-        public static HtmlGenericControl FL_form_create_dropdownlist1(string control_id, MySqlConnection con = null, MySqlCommand cmd = null,
-            string query = null, string field1 = null, string field2 = null, string table_name = null)
+        public static HtmlGenericControl FL_form_create_dropdownlist1(string Control_Id, MySqlConnection Con = null, MySqlCommand Cmd = null,
+            string Query = null, string Field1 = null, string Field2 = null, string Table_Name = null)
         {
-            string control_id_t = control_id.Replace(" ", "");
-            HtmlGenericControl div1 = new HtmlGenericControl("div");
-            div1.Attributes.Add("class", "form-group nav");
-            div1.Attributes.Add("runat", "server");
+            var Control_Id_T = Control_Id.Replace(" ", "");
+            var Div1 = new HtmlGenericControl("div");
+            Div1.Attributes.Add("class", "form-group nav");
+            Div1.Attributes.Add("runat", "server");
 
-            Label lbl = new Label();
-            lbl.Text = control_id;
-            lbl.CssClass = "col-md-4 control-label";
+            var Lbl = new Label { Text = Control_Id, CssClass = "col-md-4 control-label" };
 
-            HtmlGenericControl div2 = new HtmlGenericControl("div");
+            var Div2 = new HtmlGenericControl("div");
 
-            div2.Attributes.Add("class", "col-md-8");
-            div2.Attributes.Add("runat", "server");
+            Div2.Attributes.Add("class", "col-md-8");
+            Div2.Attributes.Add("runat", "server");
 
             DropDownList ddl = new DropDownList();
-            ddl.ID = control_id_t;
+            ddl.ID = Control_Id_T;
 
-            lbl.AssociatedControlID = control_id_t;
+            Lbl.AssociatedControlID = Control_Id_T;
             // ASSIGN A CLASS. WE'LL USE THE CLASS NAME TO EXTRACT DATA USING JQUERY.
             ddl.CssClass = "form-control";
 
             // CREATE AN INSTANCE OF TEXTBOX.
             // WITH EVERY COLUMN NAME, WE'LL CREATE AND ADD A TEXTBOX.
 
-            div2.Controls.Add(ddl);
-            div1.Controls.Add(lbl);
-            div1.Controls.Add(div2);
+            Div2.Controls.Add(ddl);
+            Div1.Controls.Add(Lbl);
+            Div1.Controls.Add(Div2);
 
-            if (!string.IsNullOrEmpty(field1))
+            if (!string.IsNullOrEmpty(Field1))
             {
                 ddl.Items.Clear();
-                var item1 = new ListItem
+                var Item1 = new ListItem
                 {
-                    Text = "-Select " + control_id + "-",
+                    Text = "-Select " + Control_Id + "-",
                     Value = "0"
                 };
-                ddl.Items.Add(item1);
-                if (!string.IsNullOrEmpty(query))
+                ddl.Items.Add(Item1);
+                if (!string.IsNullOrEmpty(Query))
                 {
-                    cmd.CommandText = query;
+                    Cmd.CommandText = Query;
                 }
                 else
                 {
-                    cmd.CommandText = "SELECT '" + field1 + "','" + field2 + "' FROM '" + table_name + "';";
+                    Cmd.CommandText = "SELECT '" + Field1 + "','" + Field2 + "' FROM '" + Table_Name + "';";
                 }
-                cmd.Connection = con;
-                _sql.Con_switch(con);
-                MySqlDataReader reader = cmd.ExecuteReader();
+                Cmd.Connection = Con;
+                _sql.Con_switch(Con);
+                MySqlDataReader reader = Cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
                     var item = new ListItem
                     {
-                        Text = reader[field1].ToString(),
-                        Value = reader[field2].ToString()
+                        Text = reader[Field1].ToString(),
+                        Value = reader[Field2].ToString()
                     };
                     ddl.Items.Add(item);
                 }
                 reader.Close();
-                FL_MySqlExecutor.Con_switch(con);
+                FL_MySqlExecutor.Con_switch(Con);
             }
 
-            return div1;
+            return Div1;
         }
 
         /*public static HtmlGenericControl FL_form_create_dropdownlist1(string control_id, DropDownList ddl, MySqlConnection con = null, MySqlCommand cmd = null,

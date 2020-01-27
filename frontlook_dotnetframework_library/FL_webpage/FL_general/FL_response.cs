@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.HtmlControls;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_general
 {
@@ -40,7 +41,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
             if (!string.IsNullOrEmpty(redirect))
             {
                 return "<script language='javascript'>" +
-                       "window.alert('Salary Head Is Already Present With Name " +
+                       "window.alert('" +
                        message + "');" +
                        "window.location='" + redirect + "';" +
                        "</script>";
@@ -57,7 +58,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
 
         public static string FL_printmessage_to_webpage(this string message)
         {
-            return message;
+            return message + "<br/>";
         }
     }
 }
