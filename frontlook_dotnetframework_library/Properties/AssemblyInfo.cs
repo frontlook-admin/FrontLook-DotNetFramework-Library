@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following
+// General Information about an assembly is Controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("frontlook_dotnetframework_library")]
@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("25675050-f77d-499d-bb6c-1eb3817973a6")]
 
-// Version information for an assembly consists of the following four values:
+// Version information for an assembly Consists of the following four values:
 //
 //      Major Version
 //      Minor Version

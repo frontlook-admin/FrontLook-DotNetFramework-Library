@@ -10,17 +10,17 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
     public static class FL_Label_CheckBox
     {
-        public static HtmlGenericControl FL_label_checkbox(string control_id)
+        public static HtmlGenericControl FL_label_checkbox(string Control_id)
         {
-            string control_id_t = control_id.Replace(" ", "");
+            string Control_id_t = Control_id.Replace(" ", "");
             HtmlGenericControl div1 = new HtmlGenericControl("div");
             div1.Attributes.Add("class", "form-group");
             div1.Attributes.Add("runat", "server");
 
             Label lbl = new Label();
-            lbl.Text = control_id;
+            lbl.Text = Control_id;
             lbl.Attributes.Add("ForeColor", "Black");
-            lbl.CssClass = "col-md-4 control-label textfield";
+            lbl.CssClass = "col-md-4 Control-label textfield";
 
             HtmlGenericControl div2 = new HtmlGenericControl("div");
 
@@ -28,9 +28,9 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             div2.Attributes.Add("runat", "server");
 
             CheckBox chkbox = new CheckBox();
-            chkbox.ID = control_id_t;
+            chkbox.ID = Control_id_t;
 
-            lbl.AssociatedControlID = control_id_t;
+            lbl.AssociatedControlID = Control_id_t;
             // ASSIGN A CLASS. WE'LL USE THE CLASS NAME TO EXTRACT DATA USING JQUERY.
             chkbox.CssClass = "checkbox";
 
@@ -44,17 +44,17 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
-        public static HtmlGenericControl FL_label_readonly_checkbox(string control_id)
+        public static HtmlGenericControl FL_label_readonly_checkbox(string Control_id)
         {
-            string control_id_t = control_id.Replace(" ", "");
+            string Control_id_t = Control_id.Replace(" ", "");
             HtmlGenericControl div1 = new HtmlGenericControl("div");
             div1.Attributes.Add("class", "form-group");
             div1.Attributes.Add("runat", "server");
 
             Label lbl = new Label();
-            lbl.Text = control_id;
+            lbl.Text = Control_id;
             lbl.Attributes.Add("ForeColor", "Black");
-            lbl.CssClass = "col-md-4 control-label textfield";
+            lbl.CssClass = "col-md-4 Control-label textfield";
 
             HtmlGenericControl div2 = new HtmlGenericControl("div");
 
@@ -62,10 +62,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             div2.Attributes.Add("runat", "server");
 
             CheckBox chkbox = new CheckBox();
-            chkbox.ID = control_id_t;
+            chkbox.ID = Control_id_t;
             chkbox.Enabled = true;
 
-            lbl.AssociatedControlID = control_id_t;
+            lbl.AssociatedControlID = Control_id_t;
             // ASSIGN A CLASS. WE'LL USE THE CLASS NAME TO EXTRACT DATA USING JQUERY.
             chkbox.CssClass = "checkbox";
 

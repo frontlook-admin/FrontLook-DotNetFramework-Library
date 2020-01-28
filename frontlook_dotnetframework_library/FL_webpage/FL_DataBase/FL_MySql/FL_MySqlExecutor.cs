@@ -7,7 +7,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
     public static class FL_MySqlExecutor
     {
-        public static void Con_switch_on(MySqlConnection Con)
+        public static void MySql_Con_switch_on(MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Closed)
             {
@@ -15,12 +15,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
             else if (Con.State == ConnectionState.Broken)
             {
-                MySqlConnection con1 = new MySqlConnection
+                MySqlConnection Con1 = new MySqlConnection
                 {
                     ConnectionString = Con.ConnectionString
                 };
                 Con.Dispose();
-                Con = con1;
+                Con = Con1;
                 Con.Open();
             }
             else
@@ -30,7 +30,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
         }
 
-        public static void Con_switch_off(MySqlConnection Con)
+        public static void MySql_Con_switch_off(MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Open)
             {
@@ -38,15 +38,15 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
         }
 
-        public static void Con_switch(MySqlConnection Con)
+        public static void MySql_Con_switch(MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Open)
             {
-                Con_switch_off(Con);
+                MySql_Con_switch_off(Con);
             }
             else if (Con.State == ConnectionState.Closed)
             {
-                Con_switch_on(Con);
+                MySql_Con_switch_on(Con);
             }
         }
 
@@ -55,93 +55,93 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 
         }
 
-        public static int ExecuteMySqlCommand(MySqlConnection Con, MySqlCommand Cmd, string Query)
+        public static int ExecuteMySqlCommand(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
-            Con_switch(Con);
+            MySql_Con_switch(Con);
             int r = Cmd.ExecuteNonQuery();
-            Con_switch(Con);
+            MySql_Con_switch(Con);
             return r;
         }
 
-        public static int ExecuteMySqlCommand(MySqlCommand cmd)
+        public static int ExecuteMySqlCommand(this MySqlCommand Cmd)
         {
-            Con_switch(cmd.Connection);
-            int r = cmd.ExecuteNonQuery();
-            Con_switch(cmd.Connection);
+            MySql_Con_switch(Cmd.Connection);
+            int r = Cmd.ExecuteNonQuery();
+            MySql_Con_switch(Cmd.Connection);
             return r;
         }
 
-        public static DataTable FL_DataTable(MySqlConnection con, MySqlCommand cmd, string query)
+        public static DataTable FL_MySql_MySqlDataTable(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
             DataTable dt = new DataTable();
-            cmd.Connection = con;
-            cmd.CommandText = query;
-            Con_switch(con);
-            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            Cmd.Connection = Con;
+            Cmd.CommandText = Query;
+            MySql_Con_switch(Con);
+            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
             adp.Fill(dt);
-            Con_switch(con);
+            MySql_Con_switch(Con);
             return dt;
         }
 
-        public static DataTable FL_DataTable(MySqlCommand cmd)
+        public static DataTable FL_MySql_DataTable(this MySqlCommand Cmd)
         {
             DataTable dt = new DataTable();
-            Con_switch(cmd.Connection);
-            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            MySql_Con_switch(Cmd.Connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
             adp.Fill(dt);
-            Con_switch(cmd.Connection);
+            MySql_Con_switch(Cmd.Connection);
             return dt;
         }
 
-        public static DataSet FL_DataSet(MySqlConnection con, MySqlCommand cmd, string query)
+        public static DataSet FL_MySql_DataSet(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
             DataSet ds = new DataSet();
-            cmd.Connection = con;
-            cmd.CommandText = query;
-            Con_switch(con);
-            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            Cmd.Connection = Con;
+            Cmd.CommandText = Query;
+            MySql_Con_switch(Con);
+            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
             adp.Fill(ds);
-            Con_switch(con);
+            MySql_Con_switch(Con);
             return ds;
         }
 
-        public static DataSet FL_DataSet(MySqlCommand cmd)
+        public static DataSet FL_MySql_DataSet(this MySqlCommand Cmd)
         {
             DataSet ds = new DataSet();
-            Con_switch(cmd.Connection);
-            MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+            MySql_Con_switch(Cmd.Connection);
+            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
             adp.Fill(ds);
-            Con_switch(cmd.Connection);
+            MySql_Con_switch(Cmd.Connection);
             return ds;
         }
 
-        public static Repeater FL_RepeterData(MySqlConnection con, MySqlCommand cmd, string query)
+        public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
             Repeater r = new Repeater();
-            r.DataSource = FL_DataSet(con, cmd, query);
+            r.DataSource = FL_MySql_DataSet(Cmd, Query, Con);
             r.DataBind();
-            Con_switch(cmd.Connection);
+            MySql_Con_switch(Cmd.Connection);
             return r;
         }
 
-        public static Repeater FL_RepeterData(MySqlCommand cmd)
+        public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd)
         {
             Repeater r = new Repeater();
-            r.DataSource = FL_DataSet(cmd);
+            r.DataSource = FL_MySql_DataSet(Cmd);
             r.DataBind();
-            Con_switch(cmd.Connection);
+            MySql_Con_switch(Cmd.Connection);
             return r;
         }
 
-        public static bool FL_Check_Column_Exists(MySqlConnection con, MySqlCommand cmd, string database_name, string tableName, string columnname)
+        public static bool FL_MySql_Check_Column_Exists(MySqlConnection Con, MySqlCommand Cmd, string Database_Name, string tableName, string columnname)
         {
-            cmd.Connection = con;
-            cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + database_name + "' AND TABLE_NAME='" +
+            Cmd.Connection = Con;
+            Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
                               tableName + "' and COLUMN_NAME = '" + columnname + "') as exist;";
-            Con_switch(con);
-            MySqlDataReader reader = cmd.ExecuteReader();
+            MySql_Con_switch(Con);
+            MySqlDataReader reader = Cmd.ExecuteReader();
             var v = "";
             while (reader.Read())
             {
@@ -149,7 +149,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
             reader.Dispose();
             reader.Close();
-            Con_switch(con);
+            MySql_Con_switch(Con);
             if (v.Equals("0") || v.Equals(""))
             {
                 return false;
@@ -160,28 +160,70 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
         }
 
-        /*public static bool CheckObjectExists(MySqlConnection con, MySqlCommand cmd,string database_name,string tableName, string columnname)
+
+        /*Copied*/
+        public static int FL_mysql_execute_command(string Constring, string sqlCommand)
+        {
+            MySqlConnection Connection = new MySqlConnection(Constring);
+            MySqlCommand Cmd = new MySqlCommand(sqlCommand, Connection);
+            Connection.Open();
+            var r = Cmd.ExecuteNonQuery();
+            Connection.Close();
+            Cmd.Dispose();
+            Connection.Dispose();
+            return r;
+        }
+
+        public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string sqlCommand)
+        {
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            //DataSet ds = new DataSet();
+
+            MySqlConnection Connection = new MySqlConnection(Constring);
+            MySqlCommand Cmd = new MySqlCommand(sqlCommand, Connection);
+            Connection.Open();
+            da = new MySqlDataAdapter(Cmd);
+            //DataTable dt = new DataTable();
+            //DA.Fill(dt);
+            //ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
+            //ds.Tables.Add(dt);
+            Connection.Close();
+            //Cmd.Dispose();
+            //Connection.Dispose();
+            return da;
+        }
+
+        /*public static MySqlDataReader FL_mysql_myreader(MySqlConnection Connection, MySqlCommand Cmd)
+        {
+            MySqlDataReader r = null;
+            Connection.Open();
+            return Cmd.ExecuteReader();
+        }*/
+
+        /*Copied*/
+
+        /*public static bool CheckObjectExists(MySqlConnection Con, MySqlCommand Cmd,string database_name,string tableName, string columnname)
         {
             bool isObjectExist = false;
-            cmd.Connection = con;
-            cmd.CommandText = "SELECT EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='"+database_name+"' AND TABLE_NAME='"+tableName+"' and COLUMN_NAME = '"+tableName+"') as exist;";
-            using (con)
+            Cmd.Connection = Con;
+            Cmd.CommandText = "SELECT EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='"+database_name+"' AND TABLE_NAME='"+tableName+"' and COLUMN_NAME = '"+tableName+"') as exist;";
+            using (Con)
             {
-                using (cmd)
+                using (Cmd)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@TableName", tableName);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+                    Cmd.Parameters.AddWithValue("@TableName", tableName);
                     if (!string.IsNullOrEmpty(columnname))
                     {
-                        cmd.Parameters.AddWithValue("@ColumnName", columnname);
+                        Cmd.Parameters.AddWithValue("@ColumnName", columnname);
                     }
-                    con.Open();
-                    object IsExists = cmd.ExecuteScalar();
+                    Con.Open();
+                    object IsExists = Cmd.ExecuteScalar();
                     if (IsExists != null && IsExists != DBNull.Value)
                     {
                         isObjectExist = Convert.ToBoolean(IsExists);
                     }
-                    con.Close();
+                    Con.Close();
                 }
             }
             return isObjectExist;

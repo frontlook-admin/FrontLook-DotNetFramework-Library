@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.Office.Interop.Excel;
 using MySql.Data.MySqlClient;
-using _sql = frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql.FL_MySqlExecutor;
-using _controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_GetControl;
+using _sql = frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_SqlExecutor;
+using _Controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_GetControl;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
@@ -74,23 +73,23 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
         {
             var count = Cmd.Head_Count_DB(Con, Table_Name, Schema_Name, Anti_Parameter);
             var ids = Cmd.Get_Ids_DB(Con, Table_Name, Schema_Name, Anti_Parameter);
-            var controlids = new string[count];
+            var Controlids = new string[count];
             for (var b = 0; b <= (count - 1); b++)
             {
-                controlids[b] = ids[b].Replace(" ", "");
+                Controlids[b] = ids[b].Replace(" ", "");
             }
-            return controlids;
+            return Controlids;
         }
 
         /*
-                public static void Dynamiccontrols_DB(this MySqlCommand Cmd, MySqlConnection Con,
+                public static void DynamicControls_DB(this MySqlCommand Cmd, MySqlConnection Con,
                     string Table_Name, string Schema_Name, Control Control, string Anti_Parameter = null)
                 {
                     var count = Cmd.Head_Count_DB(Con, Table_Name, Schema_Name, Anti_Parameter);
-                    var controlIds = Cmd.Get_ControlIds_DB(Con, Table_Name, Schema_Name, Anti_Parameter);
+                    var ControlIds = Cmd.Get_ControlIds_DB(Con, Table_Name, Schema_Name, Anti_Parameter);
                     for (var b = 0; b <= (count - 1); b++)
                     {
-                        Control.Controls.Add(FL_Label_TextBox.FL_label_readonly_textbox_default(controlIds[b]));
+                        Control.Controls.Add(FL_Label_TextBox.FL_label_readonly_textbox_default(ControlIds[b]));
                     }
                 }
         */
@@ -129,7 +128,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return q;
         }
 
-        public static string Selection_elements_builder(int Count, IReadOnlyList<string> Ids, Control Parentcontrol)
+        public static string Selection_elements_builder(int Count, IReadOnlyList<string> Ids, Control ParentControl)
         {
             const string c = "'";
             const string a = "','";
@@ -143,61 +142,61 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                 {
                     if (Count == 1)
                     {
-                        if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ITextControl)
+                        if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ITextControl)
                         {
-                            var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + c + ctrl.Text + c;
                         }
-                        else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ICheckBoxControl)
+                        else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ICheckBoxControl)
                         {
-                            var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Checked;
                         }
-                        else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is DropDownList)
+                        else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is DropDownList)
                         {
-                            var ctrl = (DropDownList)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + c + ctrl.SelectedValue + c;
                         }
                     }
                     else
                     {
-                        if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ITextControl)
+                        if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ITextControl)
                         {
-                            if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                            if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                             {
-                                var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + c + ctrl.Text + f;
                             }
                             else
                             {
-                                var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + c + ctrl.Text + a;
                             }
 
                         }
-                        else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ICheckBoxControl)
+                        else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ICheckBoxControl)
                         {
-                            if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                            if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                             {
-                                var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + ctrl.Checked + e;
                             }
                             else
                             {
-                                var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + ctrl.Checked + d;
                             }
                         }
-                        else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is DropDownList)
+                        else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is DropDownList)
                         {
-                            if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                            if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                             {
-                                var ctrl = (DropDownList)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + c + ctrl.SelectedValue + f;
                             }
                             else
                             {
-                                var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                                 q = q + c + ctrl.Text + a;
                             }
                         }
@@ -205,61 +204,61 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                 }
                 else if (b > 0 && Count > (b + 1))
                 {
-                    if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ITextControl)
+                    if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ITextControl)
                     {
-                        if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                        if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                         {
-                            var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Text + f;
                         }
                         else
                         {
-                            var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Text + a;
                         }
                     }
-                    else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ICheckBoxControl)
+                    else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ICheckBoxControl)
                     {
-                        if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                        if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                         {
-                            var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Checked + e;
                         }
                         else
                         {
-                            var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Checked + d;
                         }
                     }
-                    else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is DropDownList)
+                    else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is DropDownList)
                     {
-                        if (_controls.FL_GetChildControl(Parentcontrol, Ids[b + 1]) is ICheckBoxControl)
+                        if (_Controls.FL_GetChildControl(ParentControl, Ids[b + 1]) is ICheckBoxControl)
                         {
-                            var ctrl = (DropDownList)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.SelectedValue + f;
                         }
                         else
                         {
-                            var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                             q = q + ctrl.Text + a;
                         }
                     }
                 }
                 else if (b > 0 && Count == (b + 1))
                 {
-                    if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ITextControl)
+                    if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ITextControl)
                     {
-                        var ctrl = (ITextControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                        var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                         q = q + ctrl.Text + c;
                     }
-                    else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is ICheckBoxControl)
+                    else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is ICheckBoxControl)
                     {
-                        var ctrl = (ICheckBoxControl)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                        var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                         q = q + ctrl.Checked;
                     }
-                    else if (_controls.FL_GetChildControl(Parentcontrol, Ids[b]) is DropDownList)
+                    else if (_Controls.FL_GetChildControl(ParentControl, Ids[b]) is DropDownList)
                     {
-                        var ctrl = (DropDownList)_controls.FL_GetChildControl(Parentcontrol, Ids[b]);
+                        var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, Ids[b]);
                         q = q + ctrl.SelectedValue + c;
                     }
                 }
