@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -9,13 +10,13 @@ using frontlook_dotnetframework_library.FL_desktopapp.FL_General;
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
 {
     [Guid("3A1A8463-73F7-47FE-BCAD-9DDCB9103B07")]
-    public class FL_Dbf_Manager
+    public static class FL_Dbf_Manager
     {
-        public static DataSet get_all_datatable_in_dataset(string[] filepaths)
+        public static DataSet Get_all_datatable_in_dataset(this IEnumerable<string> Filepaths)
         {
-            DataSet ds = new DataSet("data_collection");
+            var ds = new DataSet("data_collection");
             ds.Locale = Thread.CurrentThread.CurrentCulture;
-            foreach (string s in filepaths)
+            foreach (string s in Filepaths)
             {
                 DataTable dt;
                 dt = FL_DbfData_To_Excel.FL_get_only_datatable_for_dbf(s);
@@ -24,12 +25,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return ds;
         }
 
-        public static DataTable FL_dbf_datatable(string dbfFilepath)
+        public static DataTable FL_dbf_datatable(this string DbfFilepath)
         {
             //FileInfo fileInfo = new FileInfo(dbfFilepath);
             //string dbfDirectoryFilepath = fileInfo.DirectoryName;
             //string x = Path.GetDirectoryName(dbfFilepath);
-            string dbfConstring1 = FL_dbf_constring(dbfFilepath);
+            string dbfConstring1 = FL_dbf_constring(DbfFilepath);
             //Get version information about the os.
             //data_helper1.constring(dbf_filepath);
 
@@ -42,7 +43,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             //string s = "";
 
 
-            var s = dbfFilepath;
+            var s = DbfFilepath;
             //excelFilename = "";
             //sWithoutExt = "";
             //var excelFilename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + s + ".xlsx";
@@ -71,12 +72,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return dt;
         }
 
-        public static DataTable FL_dbf_datatable(string dbfFilepath, string sql)
+        public static DataTable FL_dbf_datatable(this string DbfFilepath, string Sql)
         {
             //FileInfo fileInfo = new FileInfo(dbfFilepath);
             //string dbfDirectoryFilepath = fileInfo.DirectoryName;
             //string x = Path.GetDirectoryName(dbfFilepath);
-            string dbfConstring1 = FL_dbf_constring(dbfFilepath);
+            string dbfConstring1 = FL_dbf_constring(DbfFilepath);
             //Get version information about the os.
             //data_helper1.constring(dbf_filepath);
 
@@ -98,7 +99,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             try
             {
                 OleDbConnection connection = new OleDbConnection(dbfConstring1);
-                OleDbCommand cmd = new OleDbCommand(sql, connection);
+                OleDbCommand cmd = new OleDbCommand(Sql, connection);
                 connection.Open();
                 OleDbDataAdapter da = new OleDbDataAdapter(cmd);
                 da.Fill(dt);
@@ -116,11 +117,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return dt;
         }
 
-        public static string FL_dbf_constring(string dbfFilepath)
+        public static string FL_dbf_constring(this string DbfFilepath)
         {
             string operatingSystem = FL_Os_Helper.FL_get_os();
             string dbfConstring1;
-            FileInfo fileInfo = new FileInfo(dbfFilepath);
+            FileInfo fileInfo = new FileInfo(DbfFilepath);
             string dbfDirectoryFilepath = fileInfo.DirectoryName;
             //string x = Path.GetDirectoryName(dbfFilepath);
             //string dbf_filename = "";

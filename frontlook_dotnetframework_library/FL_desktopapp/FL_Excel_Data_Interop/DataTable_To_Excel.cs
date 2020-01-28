@@ -60,13 +60,13 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                     }
                     //rel_cells = 0;
                     //rel_cells = ColumnsCount * j;
-                    //var time = stopwatch.ElapsedMilliseconds;
+                    //var time = stopwatch.ElapsedMilliseConds;
                     //var speed = (rel_cells / time);
                     //Console.WriteLine("Speed:" + speed + "cells/sec");
                 }
                 worksheet.get_Range((Range)(worksheet.Cells[2, 1]), (Range)(worksheet.Cells[rowsCount + 1, columnsCount])).Value2 = cells;
                 //stopwatch.Stop();
-                //var final_speed = (total_cells / stopwatch.ElapsedMilliseconds);
+                //var final_speed = (total_cells / stopwatch.ElapsedMilliseConds);
                 //Console.WriteLine("Completed At Speed:" + final_speed + "cells/sec");
                 if (string.IsNullOrEmpty(excelFilePath) || File.Exists(excelFilePath))
                 {
@@ -149,13 +149,13 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                     }
                     //rel_cells = 0;
                     //rel_cells = ColumnsCount * j;
-                    //var time = stopwatch.ElapsedMilliseconds;
+                    //var time = stopwatch.ElapsedMilliseConds;
                     //var speed = (rel_cells / time);
                     //Console.WriteLine("Speed:" + speed + "cells/sec");
                 }
                 worksheet.get_Range((Range)(worksheet.Cells[2, 1]), (Range)(worksheet.Cells[rowsCount + 1, columnsCount])).Value2 = cells;
                 //stopwatch.Stop();
-                //var final_speed = (total_cells / stopwatch.ElapsedMilliseconds);
+                //var final_speed = (total_cells / stopwatch.ElapsedMilliseConds);
                 //Console.WriteLine("Completed At Speed:" + final_speed + "cells/sec");
                 if (string.IsNullOrEmpty(excelFilePath) || File.Exists(excelFilePath))
                 {
