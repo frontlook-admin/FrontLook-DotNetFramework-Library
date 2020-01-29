@@ -11,47 +11,47 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase
     {
         public static void Con_switch_on(this OleDbConnection Con)
         {
-            FL_OledbExecutor.OleDb_Con_switch_on(Con);
+            Con.OleDb_Con_switch_on();
         }
 
         public static void Con_switch_on(this OdbcConnection Con)
         {
-            FL_OdbcExecutor.Odbc_Con_switch_on(Con);
+            Con.Odbc_Con_switch_on();
         }
 
         public static void Con_switch_on(this MySqlConnection Con)
         {
-            FL_MySqlExecutor.MySql_Con_switch_on(Con);
+            Con.MySql_Con_switch_on();
         }
 
         public static void Con_switch_off(this OleDbConnection Con)
         {
-            FL_OledbExecutor.OleDb_Con_switch_off(Con);
+            Con.OleDb_Con_switch_off();
         }
 
         public static void Con_switch_off(this OdbcConnection Con)
         {
-            FL_OdbcExecutor.Odbc_Con_switch_off(Con);
+            Con.Odbc_Con_switch_off();
         }
 
         public static void Con_switch_off(this MySqlConnection Con)
         {
-            FL_MySqlExecutor.MySql_Con_switch_off(Con);
+            Con.MySql_Con_switch_off();
         }
 
         public static void Con_switch(this OleDbConnection Con)
         {
-            FL_OledbExecutor.OleDb_Con_switch(Con);
+            Con.OleDb_Con_switch();
         }
 
         public static void Con_switch(this OdbcConnection Con)
         {
-            FL_OdbcExecutor.Odbc_Con_switch(Con);
+            Con.Odbc_Con_switch();
         }
 
         public static void Con_switch(this MySqlConnection Con)
         {
-            FL_MySqlExecutor.MySql_Con_switch(Con);
+            Con.MySql_Con_switch();
         }
 
         public static int ExecuteCommand(this OleDbCommand Cmd, string Query, OleDbConnection Con )
