@@ -1,14 +1,18 @@
-﻿using System.Data;
-using System.Data.OleDb;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Web.UI.WebControls;
-using System.Windows;
-
-namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
+﻿namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
 {
+    using System.Data;
+    using System.Data.OleDb;
+    using System.Web.UI.WebControls;
+
+    /// <summary>
+    /// Defines the <see cref="FL_OledbExecutor" />
+    /// </summary>
     public static class FL_OledbExecutor
     {
+        /// <summary>
+        /// The OleDb_Con_switch_on
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
         public static void OleDb_Con_switch_on(this OleDbConnection Con)
         {
             if (Con.State == ConnectionState.Closed)
@@ -32,6 +36,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             }
         }
 
+        /// <summary>
+        /// The OleDb_Con_switch_off
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
         public static void OleDb_Con_switch_off(this OleDbConnection Con)
         {
             if (Con.State == ConnectionState.Open)
@@ -40,6 +48,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             }
         }
 
+        /// <summary>
+        /// The OleDb_Con_switch
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
         public static void OleDb_Con_switch(this OleDbConnection Con)
         {
             if (Con.State == ConnectionState.Open)
@@ -52,11 +64,20 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             }
         }
 
+        /// <summary>
+        /// The ExecuteStoredProcedure
+        /// </summary>
         public static void ExecuteStoredProcedure()
         {
-
         }
 
+        /// <summary>
+        /// The ExecuteOleDbCommand
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
+        /// <returns>The <see cref="int"/></returns>
         public static int ExecuteOleDbCommand(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
             Cmd.Connection = Con;
@@ -67,6 +88,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return r;
         }
 
+        /// <summary>
+        /// The ExecuteOleDbCommand
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <returns>The <see cref="int"/></returns>
         public static int ExecuteOleDbCommand(this OleDbCommand Cmd)
         {
             OleDb_Con_switch(Cmd.Connection);
@@ -75,6 +101,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return r;
         }
 
+        /// <summary>
+        /// The FL_OleDb_DataTable
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_OleDb_DataTable(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
             DataTable dt = new DataTable();
@@ -87,6 +120,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return dt;
         }
 
+        /// <summary>
+        /// The FL_OleDb_DataTable
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_OleDb_DataTable(this OleDbCommand Cmd)
         {
             DataTable dt = new DataTable();
@@ -97,6 +135,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return dt;
         }
 
+        /// <summary>
+        /// The FL_OleDb_DataSet
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
+        /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_OleDb_DataSet(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
             DataSet ds = new DataSet();
@@ -109,6 +154,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return ds;
         }
 
+        /// <summary>
+        /// The FL_OleDb_DataSet
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_OleDb_DataSet(this OleDbCommand Cmd)
         {
             DataSet ds = new DataSet();
@@ -119,6 +169,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return ds;
         }
 
+        /// <summary>
+        /// The FL_RepeterData
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
+        /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
             Repeater r = new Repeater();
@@ -128,6 +185,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return r;
         }
 
+        /// <summary>
+        /// The FL_RepeterData
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd)
         {
             Repeater r = new Repeater();
@@ -137,6 +199,15 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Oledb
             return r;
         }
 
+        /// <summary>
+        /// The FL_Check_Column_Exists
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
+        /// <param name="Con">The Con<see cref="OleDbConnection"/></param>
+        /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="Columnname">The Columnname<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public static bool FL_Check_Column_Exists(OleDbCommand Cmd, OleDbConnection Con, string Database_Name, string TableName, string Columnname)
         {
             Cmd.Connection = Con;
