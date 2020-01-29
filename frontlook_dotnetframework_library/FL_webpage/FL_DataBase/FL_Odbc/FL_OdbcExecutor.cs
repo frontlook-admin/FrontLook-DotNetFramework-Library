@@ -1,12 +1,18 @@
-﻿using System.Data;
-using System.Data.Odbc;
-using System.Diagnostics.CodeAnalysis;
-using System.Web.UI.WebControls;
-
-namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
+﻿namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
 {
+    using System.Data;
+    using System.Data.Odbc;
+    using System.Web.UI.WebControls;
+
+    /// <summary>
+    /// Defines the <see cref="FL_OdbcExecutor" />
+    /// </summary>
     public static class FL_OdbcExecutor
     {
+        /// <summary>
+        /// The Odbc_Con_switch_on
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
         public static void Odbc_Con_switch_on(this OdbcConnection Con)
         {
             if (Con.State == ConnectionState.Closed)
@@ -30,6 +36,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             }
         }
 
+        /// <summary>
+        /// The Odbc_Con_switch_off
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
         public static void Odbc_Con_switch_off(this OdbcConnection Con)
         {
             if (Con.State == ConnectionState.Open)
@@ -38,6 +48,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             }
         }
 
+        /// <summary>
+        /// The Odbc_Con_switch
+        /// </summary>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
         public static void Odbc_Con_switch(this OdbcConnection Con)
         {
             if (Con.State == ConnectionState.Open)
@@ -50,11 +64,20 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             }
         }
 
+        /// <summary>
+        /// The ExecuteStoredProcedure
+        /// </summary>
         public static void ExecuteStoredProcedure()
         {
-
         }
 
+        /// <summary>
+        /// The ExecuteOdbcCommand
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
+        /// <returns>The <see cref="int"/></returns>
         public static int ExecuteOdbcCommand(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
             Cmd.Connection = Con;
@@ -65,6 +88,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return r;
         }
 
+        /// <summary>
+        /// The ExecuteOdbcCommand
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <returns>The <see cref="int"/></returns>
         public static int ExecuteOdbcCommand(this OdbcCommand Cmd)
         {
             Odbc_Con_switch(Cmd.Connection);
@@ -73,7 +101,14 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return r;
         }
 
-        public static DataTable FL_OdbcDataTable(this OdbcCommand Cmd, string Query, OdbcConnection Con)
+        /// <summary>
+        /// The FL_Odbc_DataTable
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
+        public static DataTable FL_Odbc_DataTable(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
             DataTable dt = new DataTable();
             Cmd.Connection = Con;
@@ -85,7 +120,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return dt;
         }
 
-        public static DataTable FL_OdbcDataTable(this OdbcCommand Cmd)
+        /// <summary>
+        /// The FL_Odbc_DataTable
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
+        public static DataTable FL_Odbc_DataTable(this OdbcCommand Cmd)
         {
             DataTable dt = new DataTable();
             Odbc_Con_switch(Cmd.Connection);
@@ -95,7 +135,14 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return dt;
         }
 
-        public static DataSet FL_OdbcDataSet(this OdbcCommand Cmd, string Query, OdbcConnection Con)
+        /// <summary>
+        /// The FL_Odbc_DataSet
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
+        /// <returns>The <see cref="DataSet"/></returns>
+        public static DataSet FL_Odbc_DataSet(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
             DataSet ds = new DataSet();
             Cmd.Connection = Con;
@@ -107,7 +154,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return ds;
         }
 
-        public static DataSet FL_OdbcDataSet(this OdbcCommand Cmd)
+        /// <summary>
+        /// The FL_Odbc_DataSet
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <returns>The <see cref="DataSet"/></returns>
+        public static DataSet FL_Odbc_DataSet(this OdbcCommand Cmd)
         {
             DataSet ds = new DataSet();
             Odbc_Con_switch(Cmd.Connection);
@@ -117,24 +169,45 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_Odbc
             return ds;
         }
 
+        /// <summary>
+        /// The FL_RepeterData
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
+        /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
             Repeater r = new Repeater();
-            r.DataSource = FL_OdbcDataSet(Cmd, Query, Con);
+            r.DataSource = FL_Odbc_DataSet(Cmd, Query, Con);
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;
         }
 
+        /// <summary>
+        /// The FL_RepeterData
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd)
         {
             Repeater r = new Repeater();
-            r.DataSource = FL_OdbcDataSet(Cmd);
+            r.DataSource = FL_Odbc_DataSet(Cmd);
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;
         }
 
+        /// <summary>
+        /// The FL_OdbcCheck_Column_Exists
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="OdbcCommand"/></param>
+        /// <param name="Con">The Con<see cref="OdbcConnection"/></param>
+        /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="Columnname">The Columnname<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public static bool FL_OdbcCheck_Column_Exists(OdbcCommand Cmd, OdbcConnection Con, string Database_Name, string TableName, string Columnname)
         {
             Cmd.Connection = Con;
