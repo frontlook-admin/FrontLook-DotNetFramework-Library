@@ -7,7 +7,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
     public static class FL_MySqlExecutor
     {
-        public static void MySql_Con_switch_on(MySqlConnection Con)
+        public static void MySql_Con_switch_on(this MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Closed)
             {
@@ -30,7 +30,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
         }
 
-        public static void MySql_Con_switch_off(MySqlConnection Con)
+        public static void MySql_Con_switch_off(this MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Open)
             {
@@ -38,7 +38,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             }
         }
 
-        public static void MySql_Con_switch(MySqlConnection Con)
+        public static void MySql_Con_switch(this MySqlConnection Con)
         {
             if (Con.State == ConnectionState.Open)
             {
@@ -135,11 +135,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             return r;
         }
 
-        public static bool FL_MySql_Check_Column_Exists(MySqlConnection Con, MySqlCommand Cmd, string Database_Name, string tableName, string columnname)
+        public static bool FL_MySql_Check_Column_Exists(MySqlCommand Cmd, MySqlConnection Con, string Database_Name, string TableName, string Columnname)
         {
             Cmd.Connection = Con;
             Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
-                              tableName + "' and COLUMN_NAME = '" + columnname + "') as exist;";
+                              TableName + "' and COLUMN_NAME = '" + Columnname + "') as exist;";
             MySql_Con_switch(Con);
             MySqlDataReader reader = Cmd.ExecuteReader();
             var v = "";
