@@ -3,22 +3,23 @@ using System.Data.OleDb;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Windows;
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
 {
-    public static class FL_Oledb_Manager
+    public static class FL_Oledb_Helper
     {
-        public static DataTable FL_get_oledb_datatable(string constring, string query)
+        public static DataTable FL_get_oledb_datatable(string Constring, string Query)
         {
             DataTable dt = new DataTable();
             try
             {
-                OleDbConnection connection = new OleDbConnection(constring);
-                OleDbCommand cmd = new OleDbCommand(query, connection);
-                connection.Open();
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                var connection = new OleDbConnection(Constring);
+                var cmd = new OleDbCommand(Query, connection);
+                connection.Con_switch();
+                var da = new OleDbDataAdapter(cmd);
                 da.Fill(dt);
-                connection.Close();
+                connection.Con_switch();
                 cmd.Dispose();
                 connection.Dispose();
             }
@@ -30,20 +31,20 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
         }
 
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
-        public static DataSet FL_get_oledb_dataset(string constring, string query)
+        public static DataSet FL_get_oledb_dataset(string Constring, string Query)
         {
             DataSet ds = new DataSet("data_set");
             try
             {
-                OleDbConnection connection = new OleDbConnection(constring);
-                OleDbCommand cmd = new OleDbCommand(query, connection);
-                connection.Open();
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                var connection = new OleDbConnection(Constring);
+                var cmd = new OleDbCommand(Query, connection);
+                connection.Con_switch();
+                var da = new OleDbDataAdapter(cmd);
+                var dt = new DataTable();
                 da.Fill(dt);
                 ds.Locale = Thread.CurrentThread.CurrentCulture;
                 ds.Tables.Add(dt);
-                connection.Close();
+                connection.Con_switch();
                 cmd.Dispose();
                 connection.Dispose();
             }
@@ -54,22 +55,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
             return ds;
         }
 
-        public static int FL_oledb_execute_command(string constring, string sqlCommand)
+        public static int FL_oledb_execute_command(string Constring, string SqlCommand)
         {
-            int r = 0;
+            var r = 0;
             try
             {
-                OleDbConnection connection = new OleDbConnection(constring);
-                OleDbCommand cmd = new OleDbCommand(sqlCommand, connection);
-                connection.Open();
-
-                r = cmd.ExecuteNonQuery();
-                //DA.Update(dt);
-                connection.Close();
-                //BackgroundWorker bgw = new BackgroundWorker();
-
-                cmd.Dispose();
-                connection.Dispose();
+                var connection = new OleDbConnection(Constring);
+                var cmd = new OleDbCommand(SqlCommand, connection);
+                r = cmd.ExecuteCommand();
             }
             catch (OleDbException e)
             {
@@ -78,9 +71,9 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
             return r;
         }
 
-        public static DataSet FL_get_only_oledbdataset(string constring, string query)
+        public static DataSet FL_get_only_oledbdataset(string Constring, string Query)
         {
-            DataSet ds = FL_get_oledb_dataset(constring, query);
+            DataSet ds = FL_get_oledb_dataset(Constring, Query);
             return ds;
         }
     }

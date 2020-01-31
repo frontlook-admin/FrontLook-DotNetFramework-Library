@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -20,7 +21,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                 case ITextControl Control:
                     return Control.Text; // works also for the RadComboBox since it returns the currently selected item's text
                 case ICheckBoxControl CheckBoxControl:
-                    return (CheckBoxControl).Checked.ToString();
+                    return CheckBoxControl.Checked.ToString();
                 default:
                 {
                     if (ChildControl is DropDownList List)
@@ -32,7 +33,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 
                     }
                     else
-                        return null;
+                        return string.Empty;
                 }
             }
         }
@@ -47,52 +48,56 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
         public static void FL_SetControlString(Control ParentControl, string ChildId, string value, string ddl_string_reqd = null)
         {
             var ChildControl = ParentControl.FindControl(ChildId);
-            if (ChildControl is ITextControl)
+            switch (ChildControl)
             {
-                if (!string.IsNullOrEmpty(value))
+                case ITextControl Control when !string.IsNullOrEmpty(value):
+                    Control.Text = value;
+                    break;
+                case ITextControl Control:
+                    Control.Text = "";
+                    break;
+                case ICheckBoxControl CheckBoxControl:
                 {
-                    ((ITextControl)ChildControl).Text = value;
-                }
-                else
-                {
-                    ((ITextControl)ChildControl).Text = "";
-                }
-            }
-            else if (ChildControl is ICheckBoxControl CheckBoxControl)
-            {
-                bool a = false;
-                bool b = true;
-                Boolean.TryParse(value, out a);
-                Boolean.TryParse(value, out b);
-                if (a.Equals(true) || b.Equals(false))
-                {
-                    CheckBoxControl.Checked = Boolean.Parse(value);
-                }
-                else
-                {
-                    CheckBoxControl.Checked = false;
-                }
-            }
-            else if (ChildControl is DropDownList)
-            {
-                if (!string.IsNullOrEmpty(ddl_string_reqd))
-                {
-                    if (string.Equals(ddl_string_reqd, "item"))
+                    bool a = false;
+                    bool b = true;
+                    bool.TryParse(value, out a);
+                    bool.TryParse(value, out b);
+                    if (a.Equals(true) || b.Equals(false))
                     {
-                        ((DropDownList)ChildControl).Items.FindByText(value);
-                    }
-                    else if (string.Equals(ddl_string_reqd, "value"))
-                    {
-                        ((DropDownList)ChildControl).Items.FindByValue(value);
+                        CheckBoxControl.Checked = bool.Parse(value);
                     }
                     else
                     {
-                        ((DropDownList)ChildControl).Items.FindByText(value);
+                        CheckBoxControl.Checked = false;
                     }
+
+                    break;
                 }
-                else
+                default:
                 {
-                    ((DropDownList)ChildControl).Items.FindByText(value);
+                    if (ChildControl is DropDownList List)
+                    {
+                        if (!string.IsNullOrEmpty(ddl_string_reqd))
+                        {
+                            if (string.Equals(ddl_string_reqd, "item"))
+                            {
+                                List.Items.FindByText(value);
+                            }
+                            else if (string.Equals(ddl_string_reqd, "value"))
+                            {
+                                List.Items.FindByValue(value);
+                            }
+                            else
+                            {
+                                List.Items.FindByText(value);
+                            }
+                        }
+                        else
+                        {
+                            List.Items.FindByText(value);
+                        }
+                    }
+                    break;
                 }
             }
         }
