@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
 {
-    public class FL_Mysql_Manager
+    public class FL_Mysql_Helper
     {
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public static int FL_mysql_execute_command(string Constring, string SqlCommand)

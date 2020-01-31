@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,40 +12,29 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return ChildControl;
         }
 
-        public static string FL_GetControlString(Control ParentControl, string ChildId, string ddl_string_reqd = null)
+        public static string FL_GetControlString(Control ParentControl, string ChildId, string Ddl_String_Reqd = null)
         {
             var ChildControl = FL_GetChildControl(ParentControl, ChildId);
-            if (ChildControl is ITextControl)
+            switch (ChildControl)
             {
-                return ((ITextControl)ChildControl).Text; // works also for the RadComboBox since it returns the currently selected item's text
-            }
-
-            if (ChildControl is ICheckBoxControl CheckBoxControl)
-            {
-                return (CheckBoxControl).Checked.ToString();
-            }
-
-            if (ChildControl is DropDownList)
-            {
-                if (!string.IsNullOrEmpty(ddl_string_reqd))
+                case ITextControl Control:
+                    return Control.Text; // works also for the RadComboBox since it returns the currently selected item's text
+                case ICheckBoxControl CheckBoxControl:
+                    return (CheckBoxControl).Checked.ToString();
+                default:
                 {
-                    if (string.Equals(ddl_string_reqd, "item"))
+                    if (ChildControl is DropDownList List)
                     {
-                        return ((DropDownList)ChildControl).SelectedItem.ToString();
-                    }
+                        return !string.IsNullOrEmpty(Ddl_String_Reqd)
+                            ? string.Equals(Ddl_String_Reqd, "item") ? List.SelectedItem.ToString() :
+                            string.Equals(Ddl_String_Reqd, "value") ? List.SelectedValue : List.SelectedItem.ToString()
+                            : List.SelectedItem.ToString();
 
-                    if (string.Equals(ddl_string_reqd, "value"))
-                    {
-                        return ((DropDownList)ChildControl).SelectedValue;
                     }
-
-                    return ((DropDownList)ChildControl).SelectedItem.ToString();
+                    else
+                        return null;
                 }
-
-                return ((DropDownList)ChildControl).SelectedItem.ToString();
             }
-
-            return null;
         }
 
         /// <summary>
