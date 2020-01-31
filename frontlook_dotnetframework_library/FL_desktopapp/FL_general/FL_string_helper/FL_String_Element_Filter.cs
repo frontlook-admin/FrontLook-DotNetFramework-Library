@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_helper
@@ -9,22 +10,20 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
     /// <summary>
     /// Filters string.
     /// </summary>
-    public class FL_String_Element_Filter
+    public static class FL_String_Element_Filter
     {
         /// <summary>
         /// Filters and removes only special characters.
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_remove_special_char(string str)
+        public static string FL_remove_special_char(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C =>
+                (C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || C == '.' || C == '_'))
             {
-                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }
@@ -32,17 +31,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts only digits
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptonlydigit(string str)
+        public static string FL_acceptonlydigit(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C => (C >= '0' && C <= '9')))
             {
-                if ((c >= '0' && c <= '9'))
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }
@@ -50,17 +46,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts only alphabets
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptonlyalphabet(string str)
+        public static string FL_acceptonlyalphabet(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C => (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z')))
             {
-                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }
@@ -68,17 +61,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts alphabet and digit.
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptAlphabetAndNumber(string str)
+        public static string FL_acceptAlphabetAndNumber(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C => (C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z')))
             {
-                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }
@@ -86,12 +76,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts Alphabet Number Point and Underscore
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptAlphabetNumberPointUnderscore(string str)
+        public static string FL_acceptAlphabetNumberPointUnderscore(string Str)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            foreach (char c in Str)
             {
                 if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
                 {
@@ -104,17 +94,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts number and point
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptNumberAndPoint(string str)
+        public static string FL_acceptNumberAndPoint(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C => (C >= '0' && C <= '9') || C == '.'))
             {
-                if ((c >= '0' && c <= '9') || c == '.')
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }
@@ -122,18 +109,16 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts Emailaddress Parameters
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="Str"></param>
         /// <returns></returns>
-        public static string FL_acceptEmailAddress(string str)
+        public static string FL_acceptEmailAddress(string Str)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in str)
+            var sb = new StringBuilder();
+            foreach (var c in Str.Where(C => (C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') ||
+                                             (C >= 'a' && C <= 'z') || C == '.' ||
+                                             C == '_' || C == '@'))
             {
-                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' ||
-                    c == '_' || c == '@')
-                {
-                    sb.Append(c);
-                }
+                sb.Append(c);
             }
             return sb.ToString();
         }

@@ -35,3 +35,9 @@ dotnet_diagnostic.CA1814.severity = silent
 
 # CA1401: P/Invokes should not be visible
 dotnet_diagnostic.CA1401.severity = silent
+
+# CA1060: Move pinvokes to native methods class
+dotnet_diagnostic.CA1060.severity = silent
+
+# CA1304: Specify CultureInfo
+dotnet_diagnostic.CA1304.severity = silent

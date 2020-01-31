@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_helper
 {
-    public class FL_Date_Validator
+    public static class FL_Date_Validator
     {
         public static Boolean val_date_dd_mm_yyyy(string str)
         {

@@ -7,7 +7,7 @@ using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
 {
-    public static class FL_Oledb_Helper
+    public static class FL_Oledb_Manager
     {
         public static DataTable FL_get_oledb_datatable(string Constring, string Query)
         {
@@ -33,7 +33,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public static DataSet FL_get_oledb_dataset(string Constring, string Query)
         {
-            DataSet ds = new DataSet("data_set");
+            var ds = new DataSet("data_set");
             try
             {
                 var connection = new OleDbConnection(Constring);

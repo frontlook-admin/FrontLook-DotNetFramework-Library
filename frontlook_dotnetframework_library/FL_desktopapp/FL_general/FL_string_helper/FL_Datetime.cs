@@ -5,7 +5,7 @@ using System.Threading;
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_helper
 {
     //Returns DateTime
-    public class FL_DateTime
+    public static class FL_DateTime
     {
 
         ///<summary>
@@ -13,18 +13,18 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// </summary>
         /// <remarks>Returns Datetime</remarks>
         /// <returns>DateTime</returns>
-        public static DateTime Parse_dd_mm_yyyy(string dateString)
+        public static DateTime Parse_dd_mm_yyyy(string DateString)
         {
             var ci = new CultureInfo("en-IN");
-            if (dateString.Length.Equals(8))
+            switch (DateString.Length)
             {
-                return DateTime.ParseExact(dateString, "dd-MM-yy", ci, DateTimeStyles.AssumeLocal);
+                case 8:
+                    return DateTime.ParseExact(DateString, "dd-MM-yy", ci, DateTimeStyles.AssumeLocal);
+                case 6:
+                    return DateTime.ParseExact(DateString, "dd-MM-", ci, DateTimeStyles.AssumeLocal);
+                default:
+                    return DateTime.ParseExact(DateString, "dd-MM-yyyy", ci, DateTimeStyles.AssumeLocal);
             }
-            if (dateString.Length.Equals(6))
-            {
-                return DateTime.ParseExact(dateString, "dd-MM-", ci, DateTimeStyles.AssumeLocal);
-            }
-            return DateTime.ParseExact(dateString, "dd-MM-yyyy", ci, DateTimeStyles.AssumeLocal);
         }
 
         ///<summary>
@@ -32,10 +32,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// </summary>
         /// <remarks>Returns Datetime</remarks>
         /// <returns>DateTime</returns>
-        public static DateTime Parse_ddmmyyyy(string dateString)
+        public static DateTime Parse_ddmmyyyy(string DateString)
         {
             var ci = new CultureInfo("en-IN");
-            return DateTime.ParseExact(dateString, "ddMMyyyy", ci, DateTimeStyles.AssumeLocal);
+            return DateTime.ParseExact(DateString, "ddMMyyyy", ci, DateTimeStyles.AssumeLocal);
         }
 
         ///<summary>
@@ -43,10 +43,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// </summary>
         /// <remarks>Returns Datetime</remarks>
         /// <returns>DateTime</returns>
-        public static DateTime Parse_yyyy_mm_dd(string dateString)
+        public static DateTime Parse_yyyy_mm_dd(string DateString)
         {
             var ci = new CultureInfo("en-IN");
-            return DateTime.ParseExact(dateString, "yyyy_MM_dd", ci, DateTimeStyles.AssumeLocal);
+            return DateTime.ParseExact(DateString, "yyyy_MM_dd", ci, DateTimeStyles.AssumeLocal);
         }
 
         ///<summary>
@@ -55,7 +55,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// </summary>
         /// <remarks>Returns Datetime</remarks>
         /// <returns>DateTime</returns>
-        public static DateTime Parse_DateTime(string dateTime)
+        public static DateTime Parse_DateTime(string DateTime)
         {
 
             //var ci = new CultureInfo("en-IN");
@@ -64,7 +64,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             var currentCulture = Thread.CurrentThread.CurrentCulture;
             //var cf = currentCulture.DateTimeFormat.ShortDatePattern + " " + currentCulture.DateTimeFormat.LongTimePattern;
             //return DateTime.ParseExact(dateTime, cf, ci, DateTimeStyles.AssumeLocal);
-            return DateTime.Parse(dateTime, currentCulture);
+            return System.DateTime.Parse(DateTime, currentCulture);
         }
     }
 }
