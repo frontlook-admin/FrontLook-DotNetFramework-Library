@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop;
-using frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper;
+using _OledbHelper= frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper.FL_Oledb_Helper;
 using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using DataTable = System.Data.DataTable;
@@ -19,7 +19,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
             var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
             var Query = "SELECT * FROM " + sWithoutExt;
-            var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring, Query);
+            var dt = _OledbHelper.FL_get_oledb_datatable(Constring, Query);
             FL_DataTableToExcel_Helper.FL_DataTableToExcel(dt, Path.GetDirectoryName(DbfFilepathWithNameAndExtension) + @"\" + Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension));
         }
 
@@ -28,11 +28,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             FL_data_to_xls(Query, Constring1, null);
         }
 
-        public static void FL_data_to_xls(string Query,string Constring1 = null,string DbfFilepathWithNameAndExtension = null)
+        public static void FL_data_to_xls(string Query, string Constring1 = null,
+            string DbfFilepathWithNameAndExtension = null)
         {
             if(string.IsNullOrEmpty(DbfFilepathWithNameAndExtension))
             {
-                var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring1, Query);
+                var dt = _OledbHelper.FL_get_oledb_datatable(Constring1, Query);
                 var filename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + dt.TableName;
                 FL_DataTableToExcel_Helper.FL_DataTableToExcel(dt, filename);
             }
@@ -40,8 +41,8 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             {
 
                 var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
-                var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
-                var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring, Query);
+                //var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
+                var dt = _OledbHelper.FL_get_oledb_datatable(Constring, Query);
                 FL_DataTableToExcel_Helper.FL_DataTableToExcel(dt, Path.GetDirectoryName(DbfFilepathWithNameAndExtension) + @"\" + Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension));
 
             }
@@ -60,6 +61,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
         {
             var dirName = Path.GetDirectoryName(DbfFilepathWithNameAndExtension);
             //string[] filepath_null;
+            // ReSharper disable once AssignNullToNotNullAttribute
             var filePaths = Directory.GetFiles(dirName, "*.dbf");
             DataToExcel_single_excel_file(filePaths);
             //FL_Excel_Data_Interop.FL_DataTableToExcel_Helper.FL_DataTableToExcel(dt, Path.GetDirectoryName(dbf_filepath_with_name_and_extension) + @"\" + Path.GetFileNameWithoutExtension(dbf_filepath_with_name_and_extension));
@@ -68,62 +70,61 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
 
         public static DataTable FL_data_to_xls_with_datatable(this string DbfFilepathWithNameAndExtension)
         {
-            var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
+            //var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
             var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
             var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
             var Query = "SELECT * FROM " + sWithoutExt;
-            var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring, Query);
+            var dt = _OledbHelper.FL_get_oledb_datatable(Constring, Query);
             FL_DataTableToExcel_Helper.FL_DataTableToExcel(dt, Path.GetDirectoryName(DbfFilepathWithNameAndExtension) + @"\" + Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension));
             return dt;
         }
 
         public static DataTable FL_get_only_datatable_for_dbf(string DbfFilepathWithNameAndExtension)
         {
-            var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
+            //var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
             var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
             var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
             var Query = "SELECT * FROM " + sWithoutExt;
-            var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring, Query);
+            var dt = _OledbHelper.FL_get_oledb_datatable(Constring, Query);
             return dt;
         }
 
 
         public static DataTable FL_get_OnlyDatatableForDbf_variableQuery(string DbfFilepathWithNameAndExtension, String Query)
         {
-            var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
+            //var fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
             var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
-            var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
-            var dt = FL_Oledb_Manager.FL_get_oledb_datatable(Constring, Query);
+            //var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
+            var dt = _OledbHelper.FL_get_oledb_datatable(Constring, Query);
             return dt;
         }
 
 
         public static DataSet FL_get_only_dataset_for_dbf(string DbfFilepathWithNameAndExtension)
         {
-            FileInfo fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
-            string Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
-            string sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
-            string Query = "SELECT * FROM " + sWithoutExt;
-            DataSet ds = FL_Oledb_Manager.FL_get_oledb_dataset(Constring, Query);
+            //FileInfo fileInfo = new FileInfo(DbfFilepathWithNameAndExtension);
+            var Constring = DbfFilepathWithNameAndExtension.FL_dbf_constring();
+            var sWithoutExt = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
+            var Query = "SELECT * FROM " + sWithoutExt;
+            var ds = _OledbHelper.FL_get_oledb_dataset(Constring, Query);
             return ds;
         }
 
         public static void DataToExcel_single_excel_file(string[] Filepaths)
         {
-            string dirName = Path.GetDirectoryName(Filepaths[0]);
+            var dirName = Path.GetDirectoryName(Filepaths[0]);
             var excelApp = new Application();
-            Workbook excelWorkBook = null;
             Range headerRange = null;
-            excelWorkBook = excelApp.Workbooks.Add();
-            int noWorksheet = 0;
-            foreach (string DbfFilepathWithNameAndExtension in Filepaths)
+            var excelWorkBook = excelApp.Workbooks.Add();
+            var noWorksheet = 0;
+            foreach (var DbfFilepathWithNameAndExtension in Filepaths)
             {
                 
-                DataTable dataTable = FL_get_only_datatable_for_dbf(DbfFilepathWithNameAndExtension);
+                var dataTable = FL_get_only_datatable_for_dbf(DbfFilepathWithNameAndExtension);
                 try
                 {
                     headerRange = null;
-                    int columnsCount = 0;
+                    var columnsCount = 0;
 
                     if (dataTable == null || (columnsCount = dataTable.Columns.Count) == 0)
                         MessageBox.Show("FL_Excel_Data_Interop.FL_DataTableToExcel_Helper.FL_DataTableToExcel: Null or empty input table!", "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -155,8 +156,8 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
                     headerRange.Font.Bold = true;
 
                     // DataCells
-                    int rowsCount = dataTable.Rows.Count;
-                    object[,] cells = new object[rowsCount, columnsCount];
+                    var rowsCount = dataTable.Rows.Count;
+                    var cells = new object[rowsCount, columnsCount];
 
                     for (int j = 0; j < rowsCount; j++)
                     {
@@ -167,7 +168,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
                         }
                         
                     }
-                    excelWorkSheet.get_Range((Range)(excelWorkSheet.Cells[2, 1]), (Range)(excelWorkSheet.Cells[rowsCount + 1, columnsCount])).Value2 = cells;
+                    excelWorkSheet.Range[(Range)(excelWorkSheet.Cells[2, 1]), (Range)(excelWorkSheet.Cells[rowsCount + 1, columnsCount])].Value2 = cells;
                     
 
                     excelWorkSheet.Name = Path.GetFileNameWithoutExtension(DbfFilepathWithNameAndExtension);
@@ -178,7 +179,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
                     MessageBox.Show(ex.Message, "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            FileInfo fileinfo = new FileInfo(Filepaths[0]);
+            //FileInfo fileinfo = new FileInfo(Filepaths[0]);
 
 
             //var ExcelFilePath1 = dir_name + @"\" + Path.GetFileNameWithoutExtension(filepaths[0]);
@@ -208,25 +209,24 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             Marshal.FinalReleaseComObject(excelApp);
         }
 
-        public static void DataSetToExcel_single_excel_file(DataSet ds)
+        public static void DataSetToExcel_single_excel_file(DataSet Ds)
         {
             //string dir_name = Path.GetDirectoryName(filepaths[0]);
             var excelApp = new Application();
-            Workbook excelWorkBook = null;
             Range headerRange = null;
-            excelWorkBook = excelApp.Workbooks.Add();
-            int noWorksheet = 0;
-            var name = ds.DataSetName;
-            for (int count = 0; count < ds.Tables.Count; count++)
+            var excelWorkBook = excelApp.Workbooks.Add();
+            var noWorksheet = 0;
+            var name = Ds.DataSetName;
+            for (var count = 0; count < Ds.Tables.Count; count++)
             {
 
-                DataTable dataTable = ds.Tables[count];
-                var xlssheetname = ds.Tables[count].TableName;
+                var dataTable = Ds.Tables[count];
+                var xlssheetname = Ds.Tables[count].TableName;
 
                 try
                 {
                     headerRange = null;
-                    int columnsCount = 0;
+                    var columnsCount = 0;
 
                     if (dataTable == null || (columnsCount = dataTable.Columns.Count) == 0)
                         MessageBox.Show("FL_Excel_Data_Interop.FL_DataTableToExcel_Helper.FL_DataTableToExcel: Null or empty input table!", "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -246,24 +246,26 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
                     }
 
 
-                    object[] header = new object[columnsCount];
+                    var header = new object[columnsCount];
 
-                    for (int i = 0; i < columnsCount; i++)
+                    for (var i = 0; i < columnsCount; i++)
+                        // ReSharper disable once PossibleNullReferenceException
                         header[i] = dataTable.Columns[i].ColumnName;
 
-                    headerRange = excelWorkSheet.get_Range((Range)(excelWorkSheet.Cells[1, 1]), (Range)(excelWorkSheet.Cells[1, columnsCount]));
+                    headerRange = excelWorkSheet.Range[(Range)(excelWorkSheet.Cells[1, 1]), (Range)(excelWorkSheet.Cells[1, columnsCount])];
                     headerRange.Value = header;
                     headerRange.Interior.Color = ColorTranslator.ToOle(Color.LightGray);
 
                     headerRange.Font.Bold = true;
 
                     // DataCells
-                    int rowsCount = dataTable.Rows.Count;
-                    object[,] cells = new object[rowsCount, columnsCount];
+                    // ReSharper disable once PossibleNullReferenceException
+                    var rowsCount = dataTable.Rows.Count;
+                    var cells = new object[rowsCount, columnsCount];
 
-                    for (int j = 0; j < rowsCount; j++)
+                    for (var j = 0; j < rowsCount; j++)
                     {
-                        for (int i = 0; i < columnsCount; i++)
+                        for (var i = 0; i < columnsCount; i++)
                         {
                             cells[j, i] = dataTable.Rows[j][i];
 
@@ -307,6 +309,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
                 }
             }
             //Marshal.FinalReleaseComObject(ExcelWorkSheet);
+            // ReSharper disable once AssignNullToNotNullAttribute
             Marshal.FinalReleaseComObject(headerRange);
             Marshal.FinalReleaseComObject(excelApp);
         }

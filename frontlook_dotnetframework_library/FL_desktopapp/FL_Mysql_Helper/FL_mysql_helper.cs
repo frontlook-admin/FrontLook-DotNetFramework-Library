@@ -3,24 +3,21 @@
 using MySql.Data.MySqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
 {
-    public class FL_Mysql_Manager
+    public static class FL_Mysql_Helper
     {
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
-        public static int FL_mysql_execute_command(string Constring, string sqlCommand)
+        public static int FL_mysql_execute_command(string Constring, string SqlCommand)
         {
-            int r = 0;
+            var r = 0;
             try
             {
-                MySqlConnection Connection = new MySqlConnection(Constring);
-                MySqlCommand Cmd = new MySqlCommand(sqlCommand, Connection);
-                Connection.Open();
-                r = Cmd.ExecuteNonQuery();
-                Connection.Close();
-                Cmd.Dispose();
-                Connection.Dispose();
+                var Connection = new MySqlConnection(Constring);
+                var Cmd = new MySqlCommand(SqlCommand, Connection);
+                r = Cmd.ExecuteCommand();
             }
             catch (MySqlException e)
             {
@@ -29,21 +26,21 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
             return r;
         }
 
-        public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string sqlCommand)
+        public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string SqlCommand)
         {
             MySqlDataAdapter da = new MySqlDataAdapter();
             //DataSet ds = new DataSet();
             try
             {
-                MySqlConnection Connection = new MySqlConnection(Constring);
-                MySqlCommand Cmd = new MySqlCommand(sqlCommand, Connection);
-                Connection.Open();
+                var Connection = new MySqlConnection(Constring);
+                var Cmd = new MySqlCommand(SqlCommand, Connection);
+                Connection.Con_switch();
                 da = new MySqlDataAdapter(Cmd);
                 //DataTable dt = new DataTable();
                 //DA.Fill(dt);
                 //ds.Locale = System.Threading.Thread.CurrentThread.CurrentCulture;
                 //ds.Tables.Add(dt);
-                Connection.Close();
+                Connection.Con_switch();
                 //Cmd.Dispose();
                 //Connection.Dispose();
             }
@@ -59,7 +56,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
             MySqlDataReader r = null;
             try
             {
-                Connection.Open();
+                Connection.Con_switch();
                 r = Cmd.ExecuteReader();
             }
             catch (MySqlException e)

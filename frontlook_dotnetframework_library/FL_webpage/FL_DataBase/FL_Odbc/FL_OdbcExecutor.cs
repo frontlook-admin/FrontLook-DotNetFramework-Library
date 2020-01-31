@@ -21,7 +21,7 @@
             }
             else if (Con.State == ConnectionState.Broken)
             {
-                OdbcConnection Con1 = new OdbcConnection
+                var Con1 = new OdbcConnection
                 {
                     ConnectionString = Con.ConnectionString
                 };
@@ -83,7 +83,7 @@
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             Odbc_Con_switch(Con);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             Odbc_Con_switch(Con);
             return r;
         }
@@ -96,7 +96,7 @@
         public static int ExecuteOdbcCommand(this OdbcCommand Cmd)
         {
             Odbc_Con_switch(Cmd.Connection);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             Odbc_Con_switch(Cmd.Connection);
             return r;
         }
@@ -110,11 +110,11 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_Odbc_DataTable(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             Odbc_Con_switch(Con);
-            OdbcDataAdapter adp = new OdbcDataAdapter(Cmd);
+            var adp = new OdbcDataAdapter(Cmd);
             adp.Fill(dt);
             Odbc_Con_switch(Con);
             return dt;
@@ -127,9 +127,9 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_Odbc_DataTable(this OdbcCommand Cmd)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             Odbc_Con_switch(Cmd.Connection);
-            OdbcDataAdapter adp = new OdbcDataAdapter(Cmd);
+            var adp = new OdbcDataAdapter(Cmd);
             adp.Fill(dt);
             Odbc_Con_switch(Cmd.Connection);
             return dt;
@@ -144,11 +144,11 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_Odbc_DataSet(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             Odbc_Con_switch(Con);
-            OdbcDataAdapter adp = new OdbcDataAdapter(Cmd);
+            var adp = new OdbcDataAdapter(Cmd);
             adp.Fill(ds);
             Odbc_Con_switch(Con);
             return ds;
@@ -161,9 +161,9 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_Odbc_DataSet(this OdbcCommand Cmd)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             Odbc_Con_switch(Cmd.Connection);
-            OdbcDataAdapter adp = new OdbcDataAdapter(Cmd);
+            var adp = new OdbcDataAdapter(Cmd);
             adp.Fill(ds);
             Odbc_Con_switch(Cmd.Connection);
             return ds;
@@ -178,8 +178,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_Odbc_DataSet(Cmd, Query, Con);
+            var r = new Repeater {DataSource = FL_Odbc_DataSet(Cmd, Query, Con)};
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;
@@ -192,8 +191,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_Odbc_DataSet(Cmd);
+            var r = new Repeater {DataSource = FL_Odbc_DataSet(Cmd)};
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;
@@ -214,7 +212,7 @@
             Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
                               TableName + "' and COLUMN_NAME = '" + Columnname + "') as exist;";
             Odbc_Con_switch(Con);
-            OdbcDataReader reader = Cmd.ExecuteReader();
+            var reader = Cmd.ExecuteReader();
             var v = "";
             while (reader.Read())
             {
@@ -223,14 +221,7 @@
             reader.Dispose();
             reader.Close();
             Odbc_Con_switch(Con);
-            if (v.Equals("0") || v.Equals(""))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !v.Equals("0") && !v.Equals("");
         }
     }
 }
