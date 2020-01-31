@@ -13,40 +13,29 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return ChildControl;
         }
 
-        public static string FL_GetControlString(Control ParentControl, string ChildId, string ddl_string_reqd = null)
+        public static string FL_GetControlString(Control ParentControl, string ChildId, string Ddl_String_Reqd = null)
         {
             var ChildControl = FL_GetChildControl(ParentControl, ChildId);
-            if (ChildControl is ITextControl)
+            switch (ChildControl)
             {
-                return ((ITextControl)ChildControl).Text; // works also for the RadComboBox since it returns the currently selected item's text
-            }
-
-            if (ChildControl is ICheckBoxControl CheckBoxControl)
-            {
-                return (CheckBoxControl).Checked.ToString();
-            }
-
-            if (ChildControl is DropDownList)
-            {
-                if (!string.IsNullOrEmpty(ddl_string_reqd))
+                case ITextControl Control:
+                    return Control.Text; // works also for the RadComboBox since it returns the currently selected item's text
+                case ICheckBoxControl CheckBoxControl:
+                    return CheckBoxControl.Checked.ToString();
+                default:
                 {
-                    if (string.Equals(ddl_string_reqd, "item"))
+                    if (ChildControl is DropDownList List)
                     {
-                        return ((DropDownList)ChildControl).SelectedItem.ToString();
-                    }
+                        return !string.IsNullOrEmpty(Ddl_String_Reqd)
+                            ? string.Equals(Ddl_String_Reqd, "item") ? List.SelectedItem.ToString() :
+                            string.Equals(Ddl_String_Reqd, "value") ? List.SelectedValue : List.SelectedItem.ToString()
+                            : List.SelectedItem.ToString();
 
-                    if (string.Equals(ddl_string_reqd, "value"))
-                    {
-                        return ((DropDownList)ChildControl).SelectedValue;
                     }
-
-                    return ((DropDownList)ChildControl).SelectedItem.ToString();
+                    else
+                        return string.Empty;
                 }
-
-                return ((DropDownList)ChildControl).SelectedItem.ToString();
             }
-
-            return null;
         }
 
         /// <summary>
@@ -59,52 +48,56 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
         public static void FL_SetControlString(Control ParentControl, string ChildId, string value, string ddl_string_reqd = null)
         {
             var ChildControl = ParentControl.FindControl(ChildId);
-            if (ChildControl is ITextControl)
+            switch (ChildControl)
             {
-                if (!string.IsNullOrEmpty(value))
+                case ITextControl Control when !string.IsNullOrEmpty(value):
+                    Control.Text = value;
+                    break;
+                case ITextControl Control:
+                    Control.Text = "";
+                    break;
+                case ICheckBoxControl CheckBoxControl:
                 {
-                    ((ITextControl)ChildControl).Text = value;
-                }
-                else
-                {
-                    ((ITextControl)ChildControl).Text = "";
-                }
-            }
-            else if (ChildControl is ICheckBoxControl CheckBoxControl)
-            {
-                bool a = false;
-                bool b = true;
-                Boolean.TryParse(value, out a);
-                Boolean.TryParse(value, out b);
-                if (a.Equals(true) || b.Equals(false))
-                {
-                    CheckBoxControl.Checked = Boolean.Parse(value);
-                }
-                else
-                {
-                    CheckBoxControl.Checked = false;
-                }
-            }
-            else if (ChildControl is DropDownList)
-            {
-                if (!string.IsNullOrEmpty(ddl_string_reqd))
-                {
-                    if (string.Equals(ddl_string_reqd, "item"))
+                    bool a = false;
+                    bool b = true;
+                    bool.TryParse(value, out a);
+                    bool.TryParse(value, out b);
+                    if (a.Equals(true) || b.Equals(false))
                     {
-                        ((DropDownList)ChildControl).Items.FindByText(value);
-                    }
-                    else if (string.Equals(ddl_string_reqd, "value"))
-                    {
-                        ((DropDownList)ChildControl).Items.FindByValue(value);
+                        CheckBoxControl.Checked = bool.Parse(value);
                     }
                     else
                     {
-                        ((DropDownList)ChildControl).Items.FindByText(value);
+                        CheckBoxControl.Checked = false;
                     }
+
+                    break;
                 }
-                else
+                default:
                 {
-                    ((DropDownList)ChildControl).Items.FindByText(value);
+                    if (ChildControl is DropDownList List)
+                    {
+                        if (!string.IsNullOrEmpty(ddl_string_reqd))
+                        {
+                            if (string.Equals(ddl_string_reqd, "item"))
+                            {
+                                List.Items.FindByText(value);
+                            }
+                            else if (string.Equals(ddl_string_reqd, "value"))
+                            {
+                                List.Items.FindByValue(value);
+                            }
+                            else
+                            {
+                                List.Items.FindByText(value);
+                            }
+                        }
+                        else
+                        {
+                            List.Items.FindByText(value);
+                        }
+                    }
+                    break;
                 }
             }
         }

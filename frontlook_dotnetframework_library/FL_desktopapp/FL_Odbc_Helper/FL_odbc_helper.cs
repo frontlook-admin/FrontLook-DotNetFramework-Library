@@ -3,23 +3,24 @@ using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Odbc_Helper
 {
-    public class FL_Odbc_Manager
+    public static class FL_Odbc_Helper
     {
         public static DataTable FL_get_odbc_datatable(string Constring, string Query)
         {
             DataTable dt = new DataTable();
             try
             {
-                OdbcConnection Connection = new OdbcConnection(Constring);
-                OdbcCommand Cmd = new OdbcCommand(Query, Connection);
-                Connection.Open();
-                OdbcDataAdapter da = new OdbcDataAdapter(Cmd);
+                var Connection = new OdbcConnection(Constring);
+                var Cmd = new OdbcCommand(Query, Connection);
+                Connection.Con_switch();
+                var da = new OdbcDataAdapter(Cmd);
                 da.Fill(dt);
                 //DA.Update(dt);
-                Connection.Close();
+                Connection.Con_switch();
                 Cmd.Dispose();
                 Connection.Dispose();
             }
@@ -31,22 +32,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Odbc_Helper
         }
 
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
-        public static int FL_odbc_execute_command(string Constring, string sqlCommand)
+        public static int FL_odbc_execute_command(string Constring, string SqlCommand)
         {
-            int r = 0;
+            var r = 0;
             try
             {
-                OdbcConnection Connection = new OdbcConnection(Constring);
-                OdbcCommand Cmd = new OdbcCommand(sqlCommand, Connection);
-                Connection.Open();
-
-                r = Cmd.ExecuteNonQuery();
-                //DA.Update(dt);
-                Connection.Close();
-                //BackgroundWorker bgw = new BackgroundWorker();
-
-                Cmd.Dispose();
-                Connection.Dispose();
+                var Connection = new OdbcConnection(Constring);
+                var Cmd = new OdbcCommand(SqlCommand, Connection);
+                r = Cmd.ExecuteCommand();
             }
             catch (OleDbException e)
             {

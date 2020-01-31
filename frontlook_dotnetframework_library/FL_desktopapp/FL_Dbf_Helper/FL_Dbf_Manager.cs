@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using frontlook_dotnetframework_library.FL_desktopapp.FL_General;
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
 {
@@ -14,12 +15,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
     {
         public static DataSet Get_all_datatable_in_dataset(this IEnumerable<string> Filepaths)
         {
-            var ds = new DataSet("data_collection");
-            ds.Locale = Thread.CurrentThread.CurrentCulture;
-            foreach (string s in Filepaths)
+            var ds = new DataSet("data_collection") {Locale = Thread.CurrentThread.CurrentCulture};
+            foreach (var s in Filepaths)
             {
-                DataTable dt;
-                dt = FL_DbfData_To_Excel.FL_get_only_datatable_for_dbf(s);
+                var dt = FL_DbfData_To_Excel.FL_get_only_datatable_for_dbf(s);
                 ds.Tables.Add(dt);
             }
             return ds;
@@ -48,19 +47,19 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             //sWithoutExt = "";
             //var excelFilename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + s + ".xlsx";
             var sWithoutExt = Path.GetFileNameWithoutExtension(s);
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             try
             {
 
-                OleDbConnection connection = new OleDbConnection(dbfConstring1);
-                string sql = "SELECT * FROM " + sWithoutExt;
+                var connection = new OleDbConnection(dbfConstring1);
+                var sql = "SELECT * FROM " + sWithoutExt;
 
-                OleDbCommand cmd = new OleDbCommand(sql, connection);
-                connection.Open();
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                var cmd = new OleDbCommand(sql, connection);
+                connection.Con_switch();
+                var da = new OleDbDataAdapter(cmd);
                 da.Fill(dt);
                 //DA.Update(dt);
-                connection.Close();
+                connection.Con_switch();
                 //BackgroundWorker bgw = new BackgroundWorker();
 
 
@@ -77,7 +76,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             //FileInfo fileInfo = new FileInfo(dbfFilepath);
             //string dbfDirectoryFilepath = fileInfo.DirectoryName;
             //string x = Path.GetDirectoryName(dbfFilepath);
-            string dbfConstring1 = FL_dbf_constring(DbfFilepath);
+            var dbfConstring1 = FL_dbf_constring(DbfFilepath);
             //Get version information about the os.
             //data_helper1.constring(dbf_filepath);
 
@@ -95,16 +94,16 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             s_without_ext = "";
             excelFilename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + s + ".xlsx";
             s_without_ext = Path.GetFileNameWithoutExtension(s);*/
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             try
             {
-                OleDbConnection connection = new OleDbConnection(dbfConstring1);
-                OleDbCommand cmd = new OleDbCommand(Sql, connection);
-                connection.Open();
-                OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                var connection = new OleDbConnection(dbfConstring1);
+                var cmd = new OleDbCommand(Sql, connection);
+                connection.Con_switch();
+                var da = new OleDbDataAdapter(cmd);
                 da.Fill(dt);
                 //DA.Update(dt);
-                connection.Close();
+                connection.Con_switch();
                 //BackgroundWorker bgw = new BackgroundWorker();
                 cmd.Dispose();
                 connection.Dispose();
@@ -119,10 +118,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
 
         public static string FL_dbf_constring(this string DbfFilepath)
         {
-            string operatingSystem = FL_Os_Helper.FL_get_os();
+            var operatingSystem = FL_Os_Helper.FL_get_os();
             string dbfConstring1;
-            FileInfo fileInfo = new FileInfo(DbfFilepath);
-            string dbfDirectoryFilepath = fileInfo.DirectoryName;
+            var fileInfo = new FileInfo(DbfFilepath);
+            var dbfDirectoryFilepath = fileInfo.DirectoryName;
             //string x = Path.GetDirectoryName(dbfFilepath);
             //string dbf_filename = "";
 

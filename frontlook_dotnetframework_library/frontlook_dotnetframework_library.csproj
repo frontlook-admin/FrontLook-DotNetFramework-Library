@@ -131,16 +131,16 @@
   <ItemGroup>
     <Compile Include="FL_desktopapp\FL_Dbf_Helper\FL_Dbf_Manager.cs" />
     <Compile Include="FL_desktopapp\FL_Dbf_Helper\FL_Dbf_To_Excel.cs" />
-    <Compile Include="FL_desktopapp\FL_Excel_Data_Interop\DataTable_To_Excel.cs" />
+    <Compile Include="FL_desktopapp\FL_Excel_Data_Interop\FL_DataTableToExcel_Helper.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_combobox.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_Os_Helper.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_Datetime.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_Date_Validator.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_String_Element_Filter.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_String_Validator.cs" />
-    <Compile Include="FL_desktopapp\FL_Mysql_Helper\FL_mysql_helper.cs" />
-    <Compile Include="FL_desktopapp\FL_Odbc_Helper\FL_odbc_helper.cs" />
-    <Compile Include="FL_desktopapp\FL_Oledb_Helper\FL_oledb_helper.cs" />
+    <Compile Include="FL_desktopapp\FL_Mysql_Helper\FL_Mysql_Helper.cs" />
+    <Compile Include="FL_desktopapp\FL_Odbc_Helper\FL_Odbc_Helper.cs" />
+    <Compile Include="FL_desktopapp\FL_Oledb_Helper\FL_Oledb_Helper.cs" />
     <Compile Include="FL_strings.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_ControlId_Dynamic.cs" />
     <Compile Include="FL_universal\FL_DataMods.cs" />
