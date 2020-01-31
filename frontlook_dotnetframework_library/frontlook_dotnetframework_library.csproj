@@ -138,9 +138,9 @@
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_Date_Validator.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_String_Element_Filter.cs" />
     <Compile Include="FL_desktopapp\FL_general\FL_string_helper\FL_String_Validator.cs" />
-    <Compile Include="FL_desktopapp\FL_Mysql_Helper\FL_Mysql_Helper.cs" />
-    <Compile Include="FL_desktopapp\FL_Odbc_Helper\FL_Odbc_Helper.cs" />
-    <Compile Include="FL_desktopapp\FL_Oledb_Helper\FL_Oledb_Helper.cs" />
+    <Compile Include="FL_desktopapp\FL_Mysql_Helper\FL_Mysql_Manager.cs" />
+    <Compile Include="FL_desktopapp\FL_Odbc_Helper\FL_Odbc_Manager.cs" />
+    <Compile Include="FL_desktopapp\FL_Oledb_Helper\FL_Oledb_Manager.cs" />
     <Compile Include="FL_strings.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_ControlId_Dynamic.cs" />
     <Compile Include="FL_universal\FL_DataMods.cs" />
