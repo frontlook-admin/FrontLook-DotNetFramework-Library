@@ -11,11 +11,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public static int FL_mysql_execute_command(string Constring, string sqlCommand)
         {
-            int r = 0;
+            var r = 0;
             try
             {
-                MySqlConnection Connection = new MySqlConnection(Constring);
-                MySqlCommand Cmd = new MySqlCommand(sqlCommand, Connection);
+                var Connection = new MySqlConnection(Constring);
+                var Cmd = new MySqlCommand(sqlCommand, Connection);
                 Connection.Open();
                 r = Cmd.ExecuteNonQuery();
                 Connection.Close();
@@ -31,7 +31,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
 
         public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string sqlCommand)
         {
-            MySqlDataAdapter da = new MySqlDataAdapter();
+            var da = new MySqlDataAdapter();
             //DataSet ds = new DataSet();
             try
             {
