@@ -21,7 +21,7 @@
             }
             else if (Con.State == ConnectionState.Broken)
             {
-                MySqlConnection Con1 = new MySqlConnection
+                var Con1 = new MySqlConnection
                 {
                     ConnectionString = Con.ConnectionString
                 };
@@ -83,7 +83,7 @@
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             MySql_Con_switch(Con);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             MySql_Con_switch(Con);
             return r;
         }
@@ -96,7 +96,7 @@
         public static int ExecuteMySqlCommand(this MySqlCommand Cmd)
         {
             MySql_Con_switch(Cmd.Connection);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             MySql_Con_switch(Cmd.Connection);
             return r;
         }
@@ -110,11 +110,11 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_MySql_DataTable(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             MySql_Con_switch(Con);
-            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
+            var adp = new MySqlDataAdapter(Cmd);
             adp.Fill(dt);
             MySql_Con_switch(Con);
             return dt;
@@ -127,9 +127,9 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_MySql_DataTable(this MySqlCommand Cmd)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             MySql_Con_switch(Cmd.Connection);
-            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
+            var adp = new MySqlDataAdapter(Cmd);
             adp.Fill(dt);
             MySql_Con_switch(Cmd.Connection);
             return dt;
@@ -144,11 +144,11 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_MySql_DataSet(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             MySql_Con_switch(Con);
-            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
+            var adp = new MySqlDataAdapter(Cmd);
             adp.Fill(ds);
             MySql_Con_switch(Con);
             return ds;
@@ -161,9 +161,9 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_MySql_DataSet(this MySqlCommand Cmd)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             MySql_Con_switch(Cmd.Connection);
-            MySqlDataAdapter adp = new MySqlDataAdapter(Cmd);
+            var adp = new MySqlDataAdapter(Cmd);
             adp.Fill(ds);
             MySql_Con_switch(Cmd.Connection);
             return ds;
@@ -178,8 +178,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_MySql_DataSet(Cmd, Query, Con);
+            var r = new Repeater {DataSource = FL_MySql_DataSet(Cmd, Query, Con)};
             r.DataBind();
             MySql_Con_switch(Cmd.Connection);
             return r;
@@ -192,8 +191,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_MySql_DataSet(Cmd);
+            var r = new Repeater {DataSource = FL_MySql_DataSet(Cmd)};
             r.DataBind();
             MySql_Con_switch(Cmd.Connection);
             return r;
