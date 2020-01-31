@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General
 {
-    public class FL_Combobox
+    public static class FL_Combobox
     {
-        public static String[] ComboBoxStrings(ComboBox comboBox)
+        public static string[] ComboBoxStrings(ComboBox ComboBox)
         {
-            string[] items = new string[comboBox.Items.Count];
+            var items = new string[ComboBox.Items.Count];
 
-            for(int i = 0; i<comboBox.Items.Count; i++)
+            for(var i = 0; i<ComboBox.Items.Count; i++)
             {
-                items[i] = comboBox.Items[i].ToString();
+                items[i] = ComboBox.Items[i].ToString();
             }
             return items;
         }
 
-        public static IEnumerable<string> search_result(string tempStr, List<String> cmblist)
+        public static IEnumerable<string> search_result(string TempStr, List<string> Cmblist)
         {
-            IEnumerable<string> data = (from m in cmblist
-                where m.ToLower().Contains(tempStr.ToLower())
-                select m);
+            var data = Cmblist.Where(M => M.ToLower().Contains(TempStr.ToLower()));
             return data;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 // ReSharper disable Checkstring namespace
 
@@ -11,73 +12,74 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
     /// <summary>
     /// String Validator
     /// </summary>
-    public class FL_String_Validator
+    public static class FL_String_Validator
     {
         /// <summary>
         /// Validates all but special characters
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param name="Str">
+        ///     <string></string>
+        /// </param>
         /// <returns></returns>
-        public static Boolean FL_notval_special_char(string str)
+        public static bool FL_notval_special_char(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C =>
+                (a && !((C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || C == '.' ||
+                        C == '_'))))
             {
-                /*if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' ||
-                    c == '_'))
-                {
-                    
-                }*/
-                Boolean b = (a && !((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_'));
                 a = b;
             }
             return a;
         }
+
         /// <summary>
         /// Validates only digit
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param name="Str">
+        ///     <string></string>
+        /// </param>
         /// <returns></returns>
-        public static Boolean FL_val_onlydigit(string str)
+        public static bool FL_val_onlydigit(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C => (a && !(C >= '0' && C <= '9'))))
             {
-                Boolean b = (a && !(c >= '0' && c <= '9'));
                 a = b;
             }
             return a;
         }
+
         /// <summary>
         /// Validates only alphabet
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param name="Str">
+        ///     <string></string>
+        /// </param>
         /// <returns></returns>
-        public static Boolean FL_val_onlyalphabet(string str)
+        public static bool FL_val_onlyalphabet(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C => (a && !((C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z')))))
             {
-                /*if (!(c >= 'A' && c <= 'Z') || !(c >= 'a' && c <= 'z'))
-                {
-                    
-                }*/
-                Boolean b = (a && !((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')));
                 a = b;
             }
             return a;
         }
+
         /// <summary>
         /// Validates alphabet and digit
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param name="str">
+        ///     <string></string>
+        /// </param>
         /// <returns></returns>
-        public static Boolean FL_val_AlphabetAndDigit(string str)
+        public static bool FL_val_AlphabetAndDigit(string str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in str.Select(C =>
+                (a && !((C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z')))))
             {
-                Boolean b = (a && !((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')));
                 a = b;
             }
             return a;
@@ -85,14 +87,15 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates Alphabet Number Point and Underscore
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param string name="Str"></param>
         /// <returns></returns>
-        public static Boolean FL_val_AlphabetNumberPointUnderscore(string str)
+        public static bool FL_val_AlphabetNumberPointUnderscore(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C =>
+                (a && !((C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || C == '.' ||
+                        C == '_'))))
             {
-                Boolean b = (a && !((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_'));
                 a = b;
             }
             return a;
@@ -100,14 +103,13 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates number and point
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param string name="Str"></param>
         /// <returns></returns>
-        public static Boolean FL_val_NumberAndPoint(string str)
+        public static bool FL_val_NumberAndPoint(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C => (a && !((C >= '0' && C <= '9') || C == '.'))))
             {
-                Boolean b = (a && !((c >= '0' && c <= '9') || c == '.'));
                 a = b;
             }
             return a;
@@ -115,14 +117,15 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Accepts Emailaddress Parameters
         /// </summary>
-        /// <param string name="str"></param>
+        /// <param string name="Str"></param>
         /// <returns></returns>
-        public static Boolean FL_val_EmailAddress(string str)
+        public static bool FL_val_EmailAddress(string Str)
         {
-            Boolean a = true;
-            foreach (char c in str)
+            var a = true;
+            foreach (var b in Str.Select(C =>
+                (a && !((C >= '0' && C <= '9') || (C >= 'A' && C <= 'Z') || (C >= 'a' && C <= 'z') || C == '.' ||
+                        C == '_' || C == '@'))))
             {
-                Boolean b = (a && !((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_' || c == '@'));
                 a = b;
             }
             return a;

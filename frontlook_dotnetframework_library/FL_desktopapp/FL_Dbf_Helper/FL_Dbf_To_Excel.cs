@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop;
-using _OledbHelper= frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper.FL_Oledb_Helper;
+using _OledbHelper= frontlook_dotnetframework_library.FL_desktopapp.FL_Oledb_Helper.FL_Oledb_Manager;
 using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using DataTable = System.Data.DataTable;

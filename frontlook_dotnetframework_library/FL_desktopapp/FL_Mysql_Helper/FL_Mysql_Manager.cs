@@ -7,7 +7,7 @@ using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
 {
-    public static class FL_Mysql_Helper
+    public static class FL_Mysql_Manager
     {
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public static int FL_mysql_execute_command(string Constring, string SqlCommand)

@@ -7,7 +7,7 @@ using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Odbc_Helper
 {
-    public static class FL_Odbc_Helper
+    public static class FL_Odbc_Manager
     {
         public static DataTable FL_get_odbc_datatable(string Constring, string Query)
         {

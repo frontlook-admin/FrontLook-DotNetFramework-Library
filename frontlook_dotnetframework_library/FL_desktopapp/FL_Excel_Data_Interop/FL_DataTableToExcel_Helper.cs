@@ -101,15 +101,15 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
         }
 
 
-        public static void DataTableToExcel_Excel_Visible(DataTable dataTable, string excelFilePath)
+        public static void DataTableToExcel_Excel_Visible(DataTable DataTable, string ExcelFilePath)
         {
             try
             {
-                var unused = (dataTable.Columns.Count + 1) * (dataTable.Rows.Count + 1);
+                var unused = (DataTable.Columns.Count + 1) * (DataTable.Rows.Count + 1);
 
                 int columnsCount;
 
-                if ((columnsCount = dataTable.Columns.Count) == 0)
+                if ((columnsCount = DataTable.Columns.Count) == 0)
                 {
                     //MessageBox.Show("FL_Excel_Data_Interop.FL_DataTableToExcel_Helper.FL_DataTableToExcel: Null or empty input table!", "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
                     MessageBox.Show("Null or empty input table!", "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -128,7 +128,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                 //stopwatch.Start();
                 // column headings               
                 for (int i = 0; i < columnsCount; i++)
-                    header[i] = dataTable.Columns[i].ColumnName;
+                    header[i] = DataTable.Columns[i].ColumnName;
 
                 Range headerRange = worksheet.get_Range((Range)(worksheet.Cells[1, 1]), (Range)(worksheet.Cells[1, columnsCount]));
                 headerRange.Value = header;
@@ -137,14 +137,14 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                 headerRange.Font.Bold = true;
 
                 // DataCells
-                var rowsCount = dataTable.Rows.Count;
+                var rowsCount = DataTable.Rows.Count;
                 var cells = new object[rowsCount, columnsCount];
 
                 for (int j = 0; j < rowsCount; j++)
                 {
                     for (int i = 0; i < columnsCount; i++)
                     {
-                        cells[j, i] = dataTable.Rows[j][i];
+                        cells[j, i] = DataTable.Rows[j][i];
 
                     }
                     //rel_cells = 0;
@@ -157,7 +157,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                 //stopwatch.Stop();
                 //var final_speed = (total_cells / stopwatch.ElapsedMilliseConds);
                 //Console.WriteLine("Completed At Speed:" + final_speed + "cells/sec");
-                if (string.IsNullOrEmpty(excelFilePath) || File.Exists(excelFilePath))
+                if (string.IsNullOrEmpty(ExcelFilePath) || File.Exists(ExcelFilePath))
                 {
 
                     excel.Visible = true;
@@ -166,7 +166,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
                 { // no file path is given
                     try
                     {
-                        worksheet.SaveAs(excelFilePath);
+                        worksheet.SaveAs(ExcelFilePath);
                         excel.Quit();
                         //MessageBox.Show("Excel file saved as "+ExcelFilePath,"DataTable Saved In Excel File",MessageBoxButton.OK,MessageBoxImage.Information);
                     }
