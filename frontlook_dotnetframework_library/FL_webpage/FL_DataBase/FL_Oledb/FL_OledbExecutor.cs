@@ -21,7 +21,7 @@
             }
             else if (Con.State == ConnectionState.Broken)
             {
-                OleDbConnection Con1 = new OleDbConnection
+                var Con1 = new OleDbConnection
                 {
                     ConnectionString = Con.ConnectionString
                 };
@@ -83,7 +83,7 @@
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             OleDb_Con_switch(Con);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             OleDb_Con_switch(Con);
             return r;
         }
@@ -96,7 +96,7 @@
         public static int ExecuteOleDbCommand(this OleDbCommand Cmd)
         {
             OleDb_Con_switch(Cmd.Connection);
-            int r = Cmd.ExecuteNonQuery();
+            var r = Cmd.ExecuteNonQuery();
             OleDb_Con_switch(Cmd.Connection);
             return r;
         }
@@ -110,11 +110,11 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_OleDb_DataTable(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             OleDb_Con_switch(Con);
-            OleDbDataAdapter adp = new OleDbDataAdapter(Cmd);
+            var adp = new OleDbDataAdapter(Cmd);
             adp.Fill(dt);
             OleDb_Con_switch(Con);
             return dt;
@@ -127,9 +127,9 @@
         /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_OleDb_DataTable(this OleDbCommand Cmd)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             OleDb_Con_switch(Cmd.Connection);
-            OleDbDataAdapter adp = new OleDbDataAdapter(Cmd);
+            var adp = new OleDbDataAdapter(Cmd);
             adp.Fill(dt);
             OleDb_Con_switch(Cmd.Connection);
             return dt;
@@ -144,11 +144,11 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_OleDb_DataSet(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             Cmd.Connection = Con;
             Cmd.CommandText = Query;
             OleDb_Con_switch(Con);
-            OleDbDataAdapter adp = new OleDbDataAdapter(Cmd);
+            var adp = new OleDbDataAdapter(Cmd);
             adp.Fill(ds);
             OleDb_Con_switch(Con);
             return ds;
@@ -161,9 +161,9 @@
         /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet FL_OleDb_DataSet(this OleDbCommand Cmd)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             OleDb_Con_switch(Cmd.Connection);
-            OleDbDataAdapter adp = new OleDbDataAdapter(Cmd);
+            var adp = new OleDbDataAdapter(Cmd);
             adp.Fill(ds);
             OleDb_Con_switch(Cmd.Connection);
             return ds;
@@ -178,8 +178,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_OleDb_DataSet(Cmd, Query, Con);
+            var r = new Repeater {DataSource = FL_OleDb_DataSet(Cmd, Query, Con)};
             r.DataBind();
             OleDb_Con_switch(Cmd.Connection);
             return r;
@@ -192,8 +191,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd)
         {
-            Repeater r = new Repeater();
-            r.DataSource = FL_OleDb_DataSet(Cmd);
+            var r = new Repeater {DataSource = FL_OleDb_DataSet(Cmd)};
             r.DataBind();
             OleDb_Con_switch(Cmd.Connection);
             return r;
@@ -214,7 +212,7 @@
             Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
                               TableName + "' and COLUMN_NAME = '" + Columnname + "') as exist;";
             OleDb_Con_switch(Con);
-            OleDbDataReader reader = Cmd.ExecuteReader();
+            var reader = Cmd.ExecuteReader();
             var v = "";
             while (reader.Read())
             {
@@ -223,14 +221,7 @@
             reader.Dispose();
             reader.Close();
             OleDb_Con_switch(Con);
-            if (v.Equals("0") || v.Equals(""))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !v.Equals("0") && !v.Equals("");
         }
     }
 }
