@@ -6,65 +6,65 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
 {
     public static class FL_Color
     {
-        public static Color FL_Color_Code(string colorcode)
+        public static Color FL_Color_Code(string Colorcode)
         {
-            colorcode = colorcode.TrimStart('#');
+            Colorcode = Colorcode.TrimStart('#');
             Color col;
-            if (colorcode.Length == 6)
+            if (Colorcode.Length == 6)
             {
                 col = Color.FromArgb(255, // hardcoded opaque
-                    int.Parse(colorcode.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(4, 2), NumberStyles.HexNumber));
+                    int.Parse(Colorcode.Substring(0, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(2, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(4, 2), NumberStyles.HexNumber));
             }
-            else if (colorcode.Length == 8) // assuming length of 8
+            else if (Colorcode.Length == 8) // assuming length of 8
             {
                 col = Color.FromArgb(
-                    int.Parse(colorcode.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(4, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(6, 2), NumberStyles.HexNumber));
+                    int.Parse(Colorcode.Substring(0, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(2, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(4, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(6, 2), NumberStyles.HexNumber));
             }
             else
             {
-                col = Color.FromArgb(Int32.Parse(colorcode, NumberStyles.HexNumber));
+                col = Color.FromArgb(Int32.Parse(Colorcode, NumberStyles.HexNumber));
             }
             return col;
         }
 
-        public static Color FL_Color_Code(this string colorcode, string colorcode_substitute = null)
+        public static Color FL_Color_Code(this string Colorcode, string Colorcode_Substitute = null)
         {
-            if (String.IsNullOrEmpty(colorcode))
+            if (String.IsNullOrEmpty(Colorcode))
             {
-                if (!String.IsNullOrEmpty(colorcode_substitute))
+                if (!String.IsNullOrEmpty(Colorcode_Substitute))
                 {
-                    colorcode = colorcode_substitute;
+                    Colorcode = Colorcode_Substitute;
                 }
                 else
                 {
-                    colorcode = "#0066FF";
+                    Colorcode = "#0066FF";
                 }
             }
-            colorcode = colorcode.TrimStart('#');
+            Colorcode = Colorcode.TrimStart('#');
             Color col;
-            if (colorcode.Length == 6)
+            if (Colorcode.Length == 6)
             {
                 col = Color.FromArgb(255, // hardcoded opaque
-                    int.Parse(colorcode.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(4, 2), NumberStyles.HexNumber));
+                    int.Parse(Colorcode.Substring(0, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(2, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(4, 2), NumberStyles.HexNumber));
             }
-            else if (colorcode.Length == 8) // assuming length of 8
+            else if (Colorcode.Length == 8) // assuming length of 8
             {
                 col = Color.FromArgb(
-                    int.Parse(colorcode.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(4, 2), NumberStyles.HexNumber),
-                    int.Parse(colorcode.Substring(6, 2), NumberStyles.HexNumber));
+                    int.Parse(Colorcode.Substring(0, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(2, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(4, 2), NumberStyles.HexNumber),
+                    int.Parse(Colorcode.Substring(6, 2), NumberStyles.HexNumber));
             }
             else
             {
-                col = Color.FromArgb(Int32.Parse(colorcode, NumberStyles.HexNumber));
+                col = Color.FromArgb(Int32.Parse(Colorcode, NumberStyles.HexNumber));
             }
             return col;
         }

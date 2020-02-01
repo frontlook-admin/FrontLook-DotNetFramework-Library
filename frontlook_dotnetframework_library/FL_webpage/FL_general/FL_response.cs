@@ -13,44 +13,29 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
     public static class FL_response
     {
         /// <summary>
-        /// Returns Java Script Pop-Up Message In Web Page Screen
-        /// </summary>
-        /// <returns>Returns Java Script Pop-Up Message In Web Page Screen</returns>
-        /// <code>FL_message(message)</code>
-        /// <example>FL_message(message)</example>
-        /// <param name="message">Message Parameter</param>
-        /*public static string FL_message(this string message)
-        {
-            return "<script language='javascript'>" +
-                   "window.alert('" +
-                   message + "');" +
-                   "</script>";
-        }*/
-
-        /// <summary>
         /// Returns Java script pop-up message in web page screen and Redirects to a new web page
         /// </summary>
         /// <summary>FL_message(message,redirect_page_name)</summary>
         /// <returns>Returns Java script pop-up message in web page screen and Redirects to a new web page</returns>
         /// <code>FL_message(message,redirect_page_name)</code>
         /// <example>FL_message(message,redirect)</example>
-        /// <param name="message">Message Parameter</param>
-        /// <param name="redirect">Redirect Parameter</param>
-        public static string FL_message(this string message, string redirect = null)
+        /// <param name="Message">Message Parameter</param>
+        /// <param name="Redirect">Redirect Parameter</param>
+        public static string FL_message(this string Message, string Redirect = null)
         {
-            if (!string.IsNullOrEmpty(redirect))
+            if (!string.IsNullOrEmpty(Redirect))
             {
                 return "<script language='javascript'>" +
                        "window.alert('" +
-                       message + "');" +
-                       "window.location='" + redirect + "';" +
+                       Message + "');" +
+                       "window.location='" + Redirect + "';" +
                        "</script>";
             }
             else
             {
                 return "<script language='javascript'>" +
                        "window.alert('" +
-                       message + "');" +
+                       Message + "');" +
                        "</script>";
             }
 
