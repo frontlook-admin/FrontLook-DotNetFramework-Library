@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
-    public static class FL_GetControl
+    public static class FL_Control
     {
         public static Control FL_GetChildControl(Control ParentControl, string ChildId)
         {

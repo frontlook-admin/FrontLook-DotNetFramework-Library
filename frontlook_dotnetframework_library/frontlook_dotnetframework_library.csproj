@@ -145,7 +145,7 @@
     <Compile Include="FL_webpage\FL_Controls\FL_ControlId_Dynamic.cs" />
     <Compile Include="FL_universal\FL_DataMods.cs" />
     <Compile Include="FL_universal\FL_MathExpression.cs" />
-    <Compile Include="FL_webpage\FL_Controls\FL_GetControl.cs" />
+    <Compile Include="FL_webpage\FL_Controls\FL_Control.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_CheckBox.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_DropDownList.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_TextBox.cs" />

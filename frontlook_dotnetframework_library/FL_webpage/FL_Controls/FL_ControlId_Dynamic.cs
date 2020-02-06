@@ -3,7 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using _sql = frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_SqlExecutor;
-using _Controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_GetControl;
+using _Controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_Control;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
