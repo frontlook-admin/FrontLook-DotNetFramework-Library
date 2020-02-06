@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 // ReSharper disable Checkstring namespace
-
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_helper
 {
     /// <summary>
     /// String Maintainer
     /// </summary>
-    
+
     /// <summary>
     /// String Validator
     /// </summary>
@@ -17,9 +15,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates all but special characters
         /// </summary>
-        /// <param name="Str">
-        ///     <string></string>
-        /// </param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_notval_special_char(string Str)
         {
@@ -36,9 +32,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates only digit
         /// </summary>
-        /// <param name="Str">
-        ///     <string></string>
-        /// </param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_onlydigit(string Str)
         {
@@ -53,9 +47,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates only alphabet
         /// </summary>
-        /// <param name="Str">
-        ///     <string></string>
-        /// </param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_onlyalphabet(string Str)
         {
@@ -70,9 +62,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
         /// <summary>
         /// Validates alphabet and digit
         /// </summary>
-        /// <param name="str">
-        ///     <string></string>
-        /// </param>
+        /// <param name="str">The str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_AlphabetAndDigit(string str)
         {
@@ -84,10 +74,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             }
             return a;
         }
+
         /// <summary>
         /// Validates Alphabet Number Point and Underscore
         /// </summary>
-        /// <param string name="Str"></param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_AlphabetNumberPointUnderscore(string Str)
         {
@@ -100,10 +91,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             }
             return a;
         }
+
         /// <summary>
         /// Validates number and point
         /// </summary>
-        /// <param string name="Str"></param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_NumberAndPoint(string Str)
         {
@@ -114,10 +106,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             }
             return a;
         }
+
         /// <summary>
         /// Accepts Emailaddress Parameters
         /// </summary>
-        /// <param string name="Str"></param>
+        /// <param name="Str">The Str<see cref="string"/></param>
         /// <returns></returns>
         public static bool FL_val_EmailAddress(string Str)
         {

@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.HtmlControls;
+﻿using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Label_CheckBox" />
+    /// </summary>
     public static class FL_Label_CheckBox
     {
+        /// <summary>
+        /// The FL_label_checkbox
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_checkbox(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -44,6 +47,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_readonly_checkbox
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_readonly_checkbox(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");

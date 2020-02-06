@@ -161,6 +161,18 @@
         }
 
         /// <summary>
+        /// The GetValue
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string GetValue(this MySqlCommand Cmd, string Query, MySqlConnection Con)
+        {
+            return Cmd.GetMySqlValue(Query, Con);
+        }
+
+        /// <summary>
         /// The FL_DataTable
         /// </summary>
         /// <param name="Cmd">The Cmd<see cref="OleDbCommand"/></param>
@@ -226,10 +238,19 @@
             return Cmd.FL_MySql_DataTable();
         }
 
+        /// <summary>
+        /// The FL_Check_Column_Exists
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="ColumnName">The ColumnName<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public static bool FL_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con, string Database_Name,
             string TableName, string ColumnName)
         {
-            return Cmd.FL_MySql_Check_Column_Exists(Con,Database_Name,TableName,ColumnName);
+            return Cmd.FL_MySql_Check_Column_Exists(Con, Database_Name, TableName, ColumnName);
         }
     }
 }

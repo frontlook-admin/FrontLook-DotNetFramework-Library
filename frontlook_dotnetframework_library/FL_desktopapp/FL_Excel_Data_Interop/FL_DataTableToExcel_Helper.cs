@@ -1,16 +1,24 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using DataTable = System.Data.DataTable;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
 {
+    /// <summary>
+    /// Defines the <see cref="FL_DataTableToExcel_Helper" />
+    /// </summary>
     public static class FL_DataTableToExcel_Helper
     {
+        /// <summary>
+        /// The FL_DataTableToExcel
+        /// </summary>
+        /// <param name="DataTable">The DataTable<see cref="DataTable"/></param>
+        /// <param name="ExcelFilePath">The ExcelFilePath<see cref="string"/></param>
         public static void FL_DataTableToExcel(DataTable DataTable, string ExcelFilePath)
         {
             try
@@ -97,10 +105,13 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
             {
                 MessageBox.Show(ex.Message, "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
-
+        /// <summary>
+        /// The DataTableToExcel_Excel_Visible
+        /// </summary>
+        /// <param name="DataTable">The DataTable<see cref="DataTable"/></param>
+        /// <param name="ExcelFilePath">The ExcelFilePath<see cref="string"/></param>
         public static void DataTableToExcel_Excel_Visible(DataTable DataTable, string ExcelFilePath)
         {
             try
@@ -186,9 +197,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Excel_Data_Interop
             {
                 MessageBox.Show(ex.Message, "Error..!!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
+        /// <summary>
+        /// The AllocConsole
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool AllocConsole();

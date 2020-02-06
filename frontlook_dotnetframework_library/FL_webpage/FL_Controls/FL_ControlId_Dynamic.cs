@@ -1,14 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MySql.Data.MySqlClient;
-using _sql = frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_SqlExecutor;
 using _Controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_Control;
+using _sql = frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_SqlExecutor;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
+    /// <summary>
+    /// Defines the <see cref="FL_ControlId_Dynamic" />
+    /// </summary>
     public static class FL_ControlId_Dynamic
     {
+        /// <summary>
+        /// The Head_Count_DB
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="Table_Name">The Table_Name<see cref="string"/></param>
+        /// <param name="Schema_Name">The Schema_Name<see cref="string"/></param>
+        /// <param name="Anti_Parameter">The Anti_Parameter<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
         public static int Head_Count_DB(this MySqlCommand Cmd, MySqlConnection Con,
             string Table_Name, string Schema_Name, string Anti_Parameter = null)
         {
@@ -37,6 +49,15 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return count;
         }
 
+        /// <summary>
+        /// The Get_Ids_DB
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="Table_Name">The Table_Name<see cref="string"/></param>
+        /// <param name="Schema_Name">The Schema_Name<see cref="string"/></param>
+        /// <param name="Anti_Parameter">The Anti_Parameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
         public static string[] Get_Ids_DB(this MySqlCommand Cmd, MySqlConnection Con,
             string Table_Name, string Schema_Name, string Anti_Parameter = null)
         {
@@ -68,6 +89,15 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return ids;
         }
 
+        /// <summary>
+        /// The Get_ControlIds_DB
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="Table_Name">The Table_Name<see cref="string"/></param>
+        /// <param name="Schema_Name">The Schema_Name<see cref="string"/></param>
+        /// <param name="Anti_Parameter">The Anti_Parameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
         public static string[] Get_ControlIds_DB(this MySqlCommand Cmd, MySqlConnection Con,
             string Table_Name, string Schema_Name, string Anti_Parameter = null)
         {
@@ -93,7 +123,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
                     }
                 }
         */
-
+        /// <summary>
+        /// The Selection_Input_Builder
+        /// </summary>
+        /// <param name="Count">The Count<see cref="int"/></param>
+        /// <param name="Ids">The Ids<see cref="IReadOnlyList{string}"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string Selection_Input_Builder(int Count, IReadOnlyList<string> Ids)
         {
             const string c = "`";
@@ -128,6 +163,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return q;
         }
 
+        /// <summary>
+        /// The Selection_elements_builder
+        /// </summary>
+        /// <param name="Count">The Count<see cref="int"/></param>
+        /// <param name="Ids">The Ids<see cref="IReadOnlyList{string}"/></param>
+        /// <param name="ParentControl">The ParentControl<see cref="Control"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string Selection_elements_builder(int Count, IReadOnlyList<string> Ids, Control ParentControl)
         {
             const string c = "'";

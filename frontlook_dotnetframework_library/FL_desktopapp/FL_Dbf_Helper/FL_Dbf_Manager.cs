@@ -1,21 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using frontlook_dotnetframework_library.FL_desktopapp.FL_General;
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
-using frontlook_dotnetframework_library.FL_desktopapp.FL_General;
-using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Dbf_Manager" />
+    /// </summary>
     [Guid("3A1A8463-73F7-47FE-BCAD-9DDCB9103B07")]
     public static class FL_Dbf_Manager
     {
+        /// <summary>
+        /// The Get_all_datatable_in_dataset
+        /// </summary>
+        /// <param name="Filepaths">The Filepaths<see cref="IEnumerable{string}"/></param>
+        /// <returns>The <see cref="DataSet"/></returns>
         public static DataSet Get_all_datatable_in_dataset(this IEnumerable<string> Filepaths)
         {
-            var ds = new DataSet("data_collection") {Locale = Thread.CurrentThread.CurrentCulture};
+            var ds = new DataSet("data_collection") { Locale = Thread.CurrentThread.CurrentCulture };
             foreach (var s in Filepaths)
             {
                 var dt = FL_DbfData_To_Excel.FL_get_only_datatable_for_dbf(s);
@@ -24,6 +32,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return ds;
         }
 
+        /// <summary>
+        /// The FL_dbf_datatable
+        /// </summary>
+        /// <param name="DbfFilepath">The DbfFilepath<see cref="string"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_dbf_datatable(this string DbfFilepath)
         {
             //FileInfo fileInfo = new FileInfo(dbfFilepath);
@@ -71,6 +84,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return dt;
         }
 
+        /// <summary>
+        /// The FL_dbf_datatable
+        /// </summary>
+        /// <param name="DbfFilepath">The DbfFilepath<see cref="string"/></param>
+        /// <param name="Sql">The Sql<see cref="string"/></param>
+        /// <returns>The <see cref="DataTable"/></returns>
         public static DataTable FL_dbf_datatable(this string DbfFilepath, string Sql)
         {
             //FileInfo fileInfo = new FileInfo(dbfFilepath);
@@ -116,6 +135,11 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Dbf_Helper
             return dt;
         }
 
+        /// <summary>
+        /// The FL_dbf_constring
+        /// </summary>
+        /// <param name="DbfFilepath">The DbfFilepath<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string FL_dbf_constring(this string DbfFilepath)
         {
             var operatingSystem = FL_Os_Helper.FL_get_os();

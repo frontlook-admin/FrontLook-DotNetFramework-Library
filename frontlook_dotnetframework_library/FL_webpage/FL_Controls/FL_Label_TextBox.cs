@@ -3,8 +3,16 @@ using System.Web.UI.WebControls;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Label_TextBox" />
+    /// </summary>
     public static class FL_Label_TextBox
     {
+        /// <summary>
+        /// The FL_label_textbox_default
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_textbox_default(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -39,6 +47,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_readonly_textbox_default
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_readonly_textbox_default(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -74,6 +87,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_textbox_date
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_textbox_date(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -109,6 +127,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_readonly_textbox_date
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_readonly_textbox_date(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -145,6 +168,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_textbox_datetime
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_textbox_datetime(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -180,6 +208,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_readonly_textbox_datetime
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_readonly_textbox_datetime(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -216,6 +249,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_textbox_datetimelocal
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_textbox_datetimelocal(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");
@@ -251,6 +289,11 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
             return div1;
         }
 
+        /// <summary>
+        /// The FL_label_readonly_textbox_datetimelocal
+        /// </summary>
+        /// <param name="Control_id">The Control_id<see cref="string"/></param>
+        /// <returns>The <see cref="HtmlGenericControl"/></returns>
         public static HtmlGenericControl FL_label_readonly_textbox_datetimelocal(string Control_id)
         {
             string Control_id_t = Control_id.Replace(" ", "");

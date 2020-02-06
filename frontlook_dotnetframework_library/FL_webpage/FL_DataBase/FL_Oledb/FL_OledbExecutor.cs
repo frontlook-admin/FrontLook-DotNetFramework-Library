@@ -178,7 +178,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd, string Query, OleDbConnection Con)
         {
-            var r = new Repeater {DataSource = FL_OleDb_DataSet(Cmd, Query, Con)};
+            var r = new Repeater { DataSource = FL_OleDb_DataSet(Cmd, Query, Con) };
             r.DataBind();
             OleDb_Con_switch(Cmd.Connection);
             return r;
@@ -191,7 +191,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OleDbCommand Cmd)
         {
-            var r = new Repeater {DataSource = FL_OleDb_DataSet(Cmd)};
+            var r = new Repeater { DataSource = FL_OleDb_DataSet(Cmd) };
             r.DataBind();
             OleDb_Con_switch(Cmd.Connection);
             return r;

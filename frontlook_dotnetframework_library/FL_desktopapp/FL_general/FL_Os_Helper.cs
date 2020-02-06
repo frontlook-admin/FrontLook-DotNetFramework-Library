@@ -2,8 +2,15 @@
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Os_Helper" />
+    /// </summary>
     public static class FL_Os_Helper
     {
+        /// <summary>
+        /// The FL_get_os
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string FL_get_os()
         {
             string operatingSystem = "";
