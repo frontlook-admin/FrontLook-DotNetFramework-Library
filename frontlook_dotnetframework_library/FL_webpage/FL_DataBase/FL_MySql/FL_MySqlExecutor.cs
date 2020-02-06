@@ -206,11 +206,11 @@
         /// <param name="TableName">The TableName<see cref="string"/></param>
         /// <param name="Columnname">The Columnname<see cref="string"/></param>
         /// <returns>The <see cref="bool"/></returns>
-        public static bool FL_MySql_Check_Column_Exists(MySqlCommand Cmd, MySqlConnection Con, string Database_Name, string TableName, string Columnname)
+        public static bool FL_MySql_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con, string Database_Name, string TableName, string ColumnName)
         {
             Cmd.Connection = Con;
             Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
-                              TableName + "' and COLUMN_NAME = '" + Columnname + "') as exist;";
+                              TableName + "' and COLUMN_NAME = '" + ColumnName + "') as exist;";
             MySql_Con_switch(Con);
             var reader = Cmd.ExecuteReader();
             var v = "";

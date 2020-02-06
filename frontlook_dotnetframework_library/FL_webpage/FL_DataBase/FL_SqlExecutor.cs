@@ -225,5 +225,11 @@
         {
             return Cmd.FL_MySql_DataTable();
         }
+
+        public static bool FL_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con, string Database_Name,
+            string TableName, string ColumnName)
+        {
+            return Cmd.FL_MySql_Check_Column_Exists(Con,Database_Name,TableName,ColumnName);
+        }
     }
 }
