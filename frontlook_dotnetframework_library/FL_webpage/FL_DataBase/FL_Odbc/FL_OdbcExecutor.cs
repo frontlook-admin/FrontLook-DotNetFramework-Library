@@ -178,7 +178,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd, string Query, OdbcConnection Con)
         {
-            var r = new Repeater {DataSource = FL_Odbc_DataSet(Cmd, Query, Con)};
+            var r = new Repeater { DataSource = FL_Odbc_DataSet(Cmd, Query, Con) };
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;
@@ -191,7 +191,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_RepeterData(this OdbcCommand Cmd)
         {
-            var r = new Repeater {DataSource = FL_Odbc_DataSet(Cmd)};
+            var r = new Repeater { DataSource = FL_Odbc_DataSet(Cmd) };
             r.DataBind();
             Odbc_Con_switch(Cmd.Connection);
             return r;

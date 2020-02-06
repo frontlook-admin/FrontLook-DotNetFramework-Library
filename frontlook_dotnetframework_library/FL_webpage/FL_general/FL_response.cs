@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.HtmlControls;
-
-namespace frontlook_dotnetframework_library.FL_webpage.FL_general
+﻿namespace frontlook_dotnetframework_library.FL_webpage.FL_general
 {
     /// <summary>
     /// Returns Response To Web Pages
@@ -15,12 +8,10 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
         /// <summary>
         /// Returns Java script pop-up message in web page screen and Redirects to a new web page
         /// </summary>
-        /// <summary>FL_message(message,redirect_page_name)</summary>
-        /// <returns>Returns Java script pop-up message in web page screen and Redirects to a new web page</returns>
-        /// <code>FL_message(message,redirect_page_name)</code>
-        /// <example>FL_message(message,redirect)</example>
+        /// </summary>
         /// <param name="Message">Message Parameter</param>
         /// <param name="Redirect">Redirect Parameter</param>
+        /// <returns>Returns Java script pop-up message in web page screen and Redirects to a new web page</returns>
         public static string FL_message(this string Message, string Redirect = null)
         {
             if (!string.IsNullOrEmpty(Redirect))
@@ -38,9 +29,13 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
                        Message + "');" +
                        "</script>";
             }
-
         }
 
+        /// <summary>
+        /// The FL_printmessage_to_webpage
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string FL_printmessage_to_webpage(this string message)
         {
             return message + "<br/>";

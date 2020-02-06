@@ -5,13 +5,15 @@ using System.Threading;
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_helper
 {
     //Returns DateTime
+    /// <summary>
+    /// Defines the <see cref="FL_DateTime" />
+    /// </summary>
     public static class FL_DateTime
     {
-
-        ///<summary>
-        /// Returns DateTime from string like 30-11-2019
+        /// <summary>
+        /// The Parse_dd_mm_yyyy
         /// </summary>
-        /// <remarks>Returns Datetime</remarks>
+        /// <param name="DateString">The DateString<see cref="string"/></param>
         /// <returns>DateTime</returns>
         public static DateTime Parse_dd_mm_yyyy(string DateString)
         {
@@ -27,10 +29,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             }
         }
 
-        ///<summary>
-        /// Returns DateTime from string like 30112019
+        /// <summary>
+        /// The Parse_ddmmyyyy
         /// </summary>
-        /// <remarks>Returns Datetime</remarks>
+        /// <param name="DateString">The DateString<see cref="string"/></param>
         /// <returns>DateTime</returns>
         public static DateTime Parse_ddmmyyyy(string DateString)
         {
@@ -38,10 +40,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             return DateTime.ParseExact(DateString, "ddMMyyyy", ci, DateTimeStyles.AssumeLocal);
         }
 
-        ///<summary>
-        /// Returns DateTime from string like 2019-11-30
+        /// <summary>
+        /// The Parse_yyyy_mm_dd
         /// </summary>
-        /// <remarks>Returns Datetime</remarks>
+        /// <param name="DateString">The DateString<see cref="string"/></param>
         /// <returns>DateTime</returns>
         public static DateTime Parse_yyyy_mm_dd(string DateString)
         {
@@ -49,11 +51,10 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_General.FL_string_h
             return DateTime.ParseExact(DateString, "yyyy_MM_dd", ci, DateTimeStyles.AssumeLocal);
         }
 
-        ///<summary>
-        /// Returns DateTime from string like 8/30/2019 1:15:36 PM In windows 7
-        /// Returns DateTime from string like 30/AUG/2019 1:15:36 PM/30/08/2019 1:15:36 PM In windows 8 onwards.
+        /// <summary>
+        /// The Parse_DateTime
         /// </summary>
-        /// <remarks>Returns Datetime</remarks>
+        /// <param name="DateTime">The DateTime<see cref="string"/></param>
         /// <returns>DateTime</returns>
         public static DateTime Parse_DateTime(string DateTime)
         {

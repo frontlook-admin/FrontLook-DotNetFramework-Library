@@ -1,9 +1,8 @@
-﻿namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
+﻿using MySql.Data.MySqlClient;
+using System.Data;
+using System.Web.UI.WebControls;
+namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
-    using MySql.Data.MySqlClient;
-    using System.Data;
-    using System.Web.UI.WebControls;
-
     /// <summary>
     /// Defines the <see cref="FL_MySqlExecutor" />
     /// </summary>
@@ -86,6 +85,29 @@
             var r = Cmd.ExecuteNonQuery();
             MySql_Con_switch(Con);
             return r;
+        }
+
+        /// <summary>
+        /// The GetMySqlValue
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Query">The Query<see cref="string"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string GetMySqlValue(this MySqlCommand Cmd, string Query, MySqlConnection Con)
+        {
+            var c = "";
+            Cmd.CommandText = Query;
+            Con.Con_switch();
+            var reader = Cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                c = reader["salhead_formula"].ToString();
+            }
+            reader.Close();
+            reader.Dispose();
+            Con.Con_switch();
+            return c;
         }
 
         /// <summary>
@@ -178,7 +200,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd, string Query, MySqlConnection Con)
         {
-            var r = new Repeater {DataSource = FL_MySql_DataSet(Cmd, Query, Con)};
+            var r = new Repeater { DataSource = FL_MySql_DataSet(Cmd, Query, Con) };
             r.DataBind();
             MySql_Con_switch(Cmd.Connection);
             return r;
@@ -191,7 +213,7 @@
         /// <returns>The <see cref="Repeater"/></returns>
         public static Repeater FL_MySql_RepeterData(this MySqlCommand Cmd)
         {
-            var r = new Repeater {DataSource = FL_MySql_DataSet(Cmd)};
+            var r = new Repeater { DataSource = FL_MySql_DataSet(Cmd) };
             r.DataBind();
             MySql_Con_switch(Cmd.Connection);
             return r;
@@ -204,7 +226,7 @@
         /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
         /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
         /// <param name="TableName">The TableName<see cref="string"/></param>
-        /// <param name="Columnname">The Columnname<see cref="string"/></param>
+        /// <param name="ColumnName">The ColumnName<see cref="string"/></param>
         /// <returns>The <see cref="bool"/></returns>
         public static bool FL_MySql_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con, string Database_Name, string TableName, string ColumnName)
         {
@@ -224,7 +246,6 @@
             return !v.Equals("0") && !v.Equals("");
         }
 
-        /*Copied*/
         /// <summary>
         /// The FL_mysql_execute_command
         /// </summary>

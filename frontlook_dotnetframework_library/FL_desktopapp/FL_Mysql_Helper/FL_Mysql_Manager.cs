@@ -1,14 +1,23 @@
 ﻿//using System.Data;
 
+using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 using MySql.Data.MySqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
-using frontlook_dotnetframework_library.FL_webpage.FL_DataBase;
 
 namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Mysql_Manager" />
+    /// </summary>
     public static class FL_Mysql_Manager
     {
+        /// <summary>
+        /// The FL_mysql_execute_command
+        /// </summary>
+        /// <param name="Constring">The Constring<see cref="string"/></param>
+        /// <param name="SqlCommand">The SqlCommand<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
         [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public static int FL_mysql_execute_command(string Constring, string SqlCommand)
         {
@@ -26,6 +35,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
             return r;
         }
 
+        /// <summary>
+        /// The FL_mysql_dataadapter
+        /// </summary>
+        /// <param name="Constring">The Constring<see cref="string"/></param>
+        /// <param name="SqlCommand">The SqlCommand<see cref="string"/></param>
+        /// <returns>The <see cref="MySqlDataAdapter"/></returns>
         public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string SqlCommand)
         {
             MySqlDataAdapter da = new MySqlDataAdapter();
@@ -51,6 +66,12 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
             return da;
         }
 
+        /// <summary>
+        /// The FL_mysql_myreader
+        /// </summary>
+        /// <param name="Connection">The Connection<see cref="MySqlConnection"/></param>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <returns>The <see cref="MySqlDataReader"/></returns>
         public static MySqlDataReader FL_mysql_myreader(MySqlConnection Connection, MySqlCommand Cmd)
         {
             MySqlDataReader r = null;

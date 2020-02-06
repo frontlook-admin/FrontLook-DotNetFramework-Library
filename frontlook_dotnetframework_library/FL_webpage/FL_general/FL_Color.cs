@@ -4,8 +4,16 @@ using System.Globalization;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_general
 {
+    /// <summary>
+    /// Defines the <see cref="FL_Color" />
+    /// </summary>
     public static class FL_Color
     {
+        /// <summary>
+        /// The FL_Color_Code
+        /// </summary>
+        /// <param name="Colorcode">The Colorcode<see cref="string"/></param>
+        /// <returns>The <see cref="Color"/></returns>
         public static Color FL_Color_Code(string Colorcode)
         {
             Colorcode = Colorcode.TrimStart('#');
@@ -32,6 +40,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_general
             return col;
         }
 
+        /// <summary>
+        /// The FL_Color_Code
+        /// </summary>
+        /// <param name="Colorcode">The Colorcode<see cref="string"/></param>
+        /// <param name="Colorcode_Substitute">The Colorcode_Substitute<see cref="string"/></param>
+        /// <returns>The <see cref="Color"/></returns>
         public static Color FL_Color_Code(this string Colorcode, string Colorcode_Substitute = null)
         {
             if (String.IsNullOrEmpty(Colorcode))
