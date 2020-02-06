@@ -13,6 +13,14 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\Users\deban\source\repos\frontlook_dotnetframework_library\Debug\core\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>C:\Users\deban\source\repos\frontlook_dotnetframework_library\Release\core\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
   </ItemGroup>
