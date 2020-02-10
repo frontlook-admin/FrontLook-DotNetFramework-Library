@@ -1,6 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data;
+using System.Web.UI;
 using System.Web.UI.WebControls;
+using _controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_Control;
+
 namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
     /// <summary>
@@ -93,8 +97,9 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
         /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
         /// <param name="Query">The Query<see cref="string"/></param>
         /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="ParameterName"></param>
         /// <returns>The <see cref="string"/></returns>
-        public static string GetMySqlValue(this MySqlCommand Cmd, string Query, MySqlConnection Con)
+        public static string GetMySqlValue(this MySqlCommand Cmd, string Query, MySqlConnection Con, string ParameterName)
         {
             var c = "";
             Cmd.CommandText = Query;
@@ -102,7 +107,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             var reader = Cmd.ExecuteReader();
             while (reader.Read())
             {
-                c = reader["salhead_formula"].ToString();
+                c = reader[ParameterName].ToString();
             }
             reader.Close();
             reader.Dispose();
@@ -220,39 +225,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
         }
 
         /// <summary>
-        /// The FL_MySql_Check_Column_Exists
-        /// </summary>
-        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
-        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
-        /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
-        /// <param name="TableName">The TableName<see cref="string"/></param>
-        /// <param name="ColumnName">The ColumnName<see cref="string"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public static bool FL_MySql_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con, string Database_Name, string TableName, string ColumnName)
-        {
-            Cmd.Connection = Con;
-            Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" + Database_Name + "' AND TABLE_NAME='" +
-                              TableName + "' and COLUMN_NAME = '" + ColumnName + "') as exist;";
-            MySql_Con_switch(Con);
-            var reader = Cmd.ExecuteReader();
-            var v = "";
-            while (reader.Read())
-            {
-                v = reader["exist"].ToString();
-            }
-            reader.Dispose();
-            reader.Close();
-            MySql_Con_switch(Con);
-            return !v.Equals("0") && !v.Equals("");
-        }
-
-        /// <summary>
-        /// The FL_mysql_execute_command
+        /// The FL_MySql_Execute_Command
         /// </summary>
         /// <param name="Constring">The Constring<see cref="string"/></param>
         /// <param name="SqlCommand">The sqlCommand<see cref="string"/></param>
         /// <returns>The <see cref="int"/></returns>
-        public static int FL_mysql_execute_command(string Constring, string SqlCommand)
+        public static int FL_MySql_Execute_Command(string Constring, string SqlCommand)
         {
             var Connection = new MySqlConnection(Constring);
             var Cmd = new MySqlCommand(SqlCommand, Connection);
@@ -265,12 +243,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
         }
 
         /// <summary>
-        /// The FL_mysql_dataadapter
+        /// The FL_MySql_DataAdapter
         /// </summary>
         /// <param name="Constring">The Constring<see cref="string"/></param>
         /// <param name="SqlCommand">The sqlCommand<see cref="string"/></param>
         /// <returns>The <see cref="MySqlDataAdapter"/></returns>
-        public static MySqlDataAdapter FL_mysql_dataadapter(string Constring, string SqlCommand)
+        public static MySqlDataAdapter FL_MySql_DataAdapter(string Constring, string SqlCommand)
         {
             //DataSet ds = new DataSet();
 
@@ -286,6 +264,365 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             //Cmd.Dispose();
             //Connection.Dispose();
             return da;
+        }
+
+        /// <summary>
+        /// The FL_MySql_Check_Column_Exists
+        /// </summary>
+        /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
+        /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="Database_Name">The Database_Name<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="ColumnName">The ColumnName<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public static bool FL_MySql_Check_Column_Exists(this MySqlCommand Cmd, MySqlConnection Con,
+            string Database_Name, string TableName, string ColumnName)
+        {
+            Cmd.Connection = Con;
+            Cmd.CommandText = "SELECT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                              Database_Name + "' AND TABLE_NAME='" + TableName + "' and COLUMN_NAME = '" +
+                              ColumnName + "') as exist;";
+            MySql_Con_switch(Con);
+            var reader = Cmd.ExecuteReader();
+            var v = "";
+            while (reader.Read())
+            {
+                v = reader["exist"].ToString();
+            }
+            reader.Dispose();
+            reader.Close();
+            MySql_Con_switch(Con);
+            return !v.Equals("0") && !v.Equals("");
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnCount
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        public static int FL_MySqlGet_ColumnCount(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, string AntiColumnParameter = null)
+        {
+            var count = 0;
+            string command;
+            if (string.IsNullOrEmpty(AntiColumnParameter))
+            {
+                command = "SELECT COUNT(COLUMN_NAME) as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "';";
+            }
+            else
+            {
+                command = "SELECT COUNT(COLUMN_NAME) as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "');";
+            }
+
+            cmd.CommandText = command;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                count = int.Parse(reader["c"].ToString());
+            }
+            reader.Close();
+            con.Con_switch();
+            return count;
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnCount
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithCountParameter">The QueryWithCountParameter<see cref="string"/></param>
+        /// <param name="CountParameterName">The CountParameterName<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        public static int FL_MySqlGet_ColumnCount(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithCountParameter, string CountParameterName)
+        {
+            var count = 0;
+            cmd.CommandText = QueryWithCountParameter;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                count = int.Parse(reader[CountParameterName].ToString());
+            }
+            reader.Close();
+            con.Con_switch();
+            return count;
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithCountParameter">The QueryWithCountParameter<see cref="string"/></param>
+        /// <param name="CountParameterName">The CountParameterName<see cref="string"/></param>
+        /// <param name="QueryWithColumnParameter">The QueryWithColumnParameter<see cref="string"/></param>
+        /// <param name="ColumnParameterName">The ColumnParameterName<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_MySqlGet_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithCountParameter, string CountParameterName, string QueryWithColumnParameter,
+            string ColumnParameterName)
+        {
+            var ColumnNames = new string[cmd.FL_MySqlGet_ColumnCount(con, QueryWithCountParameter, CountParameterName)];
+            cmd.CommandText = QueryWithColumnParameter;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ColumnNames[i] = reader[ColumnParameterName].ToString()/*.Replace(" ", "")*/;
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ColumnNames;
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithColumnParameter">The QueryWithColumnParameter<see cref="string"/></param>
+        /// <param name="ColumnParameterName">The ColumnParameterName<see cref="string"/></param>
+        /// <param name="ColumnCount">The ColumnCount<see cref="int"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_MySqlGet_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithColumnParameter, string ColumnParameterName, int ColumnCount)
+        {
+            var ColumnNames = new string[ColumnCount];
+            cmd.CommandText = QueryWithColumnParameter;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ColumnNames[i] = reader[ColumnParameterName].ToString()/*.Replace(" ", "")*/;
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ColumnNames;
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="ColumnCount">The ColumnCount<see cref="int"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_MySqlGet_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, int ColumnCount, string AntiColumnParameter = null)
+        {
+            var ColumnNames = new string[ColumnCount];
+            string command;
+            if (string.IsNullOrEmpty(AntiColumnParameter))
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "';";
+            }
+            else
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "');";
+            }
+            cmd.CommandText = command;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ColumnNames[i] = reader["c"].ToString()/*.Replace(" ", "")*/;
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ColumnNames;
+        }
+
+        /// <summary>
+        /// The FL_MySqlGet_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_MySqlGet_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, string AntiColumnParameter = null)
+        {
+            var ColumnNames = new string[cmd.FL_MySqlGet_ColumnCount(con, DatabaseName, TableName, AntiColumnParameter)];
+            string command;
+            if (string.IsNullOrEmpty(AntiColumnParameter))
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "';";
+            }
+            else
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "');";
+            }
+            cmd.CommandText = command;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ColumnNames[i] = reader["c"].ToString()/*.Replace(" ", "")*/;
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ColumnNames;
+        }
+
+        /// <summary>
+        /// The FL_MySql_SelectionElementBuilder
+        /// </summary>
+        /// <param name="count">The count<see cref="int"/></param>
+        /// <param name="ColumnNames">The ColumnNames<see cref="IReadOnlyList{string}"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string FL_MySql_ColumnElementBuilder(int count, IReadOnlyList<string> ColumnNames)
+        {
+            const string b = "`";
+            const string a = "`,`";
+            var q = "";
+            for (var i = 0; i <= (count - 1); i++)
+            {
+                if (i == 0)
+                {
+                    if (count == 1)
+                    {
+                        q = q + b + ColumnNames[i] + b;
+                    }
+                    else
+                    {
+                        q = q + b + ColumnNames[i] + a;
+                    }
+                }
+                else if (i > 0 && count > (i + 1))
+                {
+                    q = q + ColumnNames[i] + a;
+                }
+                else if (i > 0 && count == (i + 1))
+                {
+                    q = q + ColumnNames[i] + b;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return q;
+        }
+
+       public static string FL_MySql_ColumnValueElementBuilder(Control ParentControl, int count, IReadOnlyList<string> ChildControlIds)
+        {
+            const string b = "'";
+            const string a = "','";
+            var q = "";
+            for (var i = 0; i <= (count - 1); i++)
+            {
+                string v;
+                if (i == 0)
+                {
+                    if (count == 1)
+                    {
+                        v = _controls.FL_GetControlString(ParentControl, ChildControlIds[i]).Trim();
+                        q = q + b + v + b;
+                    }
+                    else
+                    {
+                        v = _controls.FL_GetControlString(ParentControl, ChildControlIds[i]).Trim();
+                        q = q + b + v + a;
+                    }
+                }
+                else if (i > 0 && count > (i + 1))
+                {
+                    v = _controls.FL_GetControlString(ParentControl, ChildControlIds[i]).Trim();
+                    q = q + v + a;
+                }
+                else if (i > 0 && count == (i + 1))
+                {
+                    v = _controls.FL_GetControlString(ParentControl, ChildControlIds[i]).Trim();
+                    q = q + v + b;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return q;
+        }
+
+       public static string FL_MySql_InsertQueryBuilder(int count, IReadOnlyList<string> ColumnNames,
+            Control ParentControl, IReadOnlyList<string> ChildControlIds,string DataBaseName,
+            string TableName)
+       {
+            return "INSERT INTO `" + DataBaseName + "`.`" + TableName + "` (" +
+                   FL_MySql_ColumnElementBuilder(count, ColumnNames) + ") VALUES(" +
+                   FL_MySql_ColumnValueElementBuilder(ParentControl, count, ChildControlIds) + ");";
+       }
+
+       public static string FL_MySql_UpdateQueryBuilder(Control ParentControl, int count, IReadOnlyList<string> controlids,
+           IReadOnlyList<string> ColumnNames, string DataBaseName, string TableName, string WhereParameter)
+        {
+            var q = "";
+            const string a = ", `";
+            const string b = "`=";
+            const string c = "`";
+
+            for (var j = 0; j <= (count - 1); j++)
+            {
+                string v;
+                if (j == 0)
+                {
+                    if (count == 1)
+                    {
+                        v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                        q = c + ColumnNames[j] + b + v;
+                    }
+                    else
+                    {
+                        v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                        q = c + ColumnNames[j] + b + v + a;
+                    }
+                }
+                else if (j > 0 && count > (j + 1))
+                {
+                    v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                    q = q + ColumnNames[j] + b + v + a;
+                }
+                else if (j > 0 && count == (j + 1))
+                {
+                    v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                    q = "UPDATE `"+DataBaseName+"`.`"+TableName+"` SET " + q + ColumnNames[j] + b + v + " WHERE " + WhereParameter + "; ";
+                }
+            }
+            return q;
         }
     }
 }

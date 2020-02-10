@@ -13,7 +13,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
     public static class FL_Mysql_Manager
     {
         /// <summary>
-        /// The FL_mysql_execute_command
+        /// The FL_MySql_Execute_Command
         /// </summary>
         /// <param name="Constring">The Constring<see cref="string"/></param>
         /// <param name="SqlCommand">The SqlCommand<see cref="string"/></param>
@@ -36,7 +36,7 @@ namespace frontlook_dotnetframework_library.FL_desktopapp.FL_Mysql_Helper
         }
 
         /// <summary>
-        /// The FL_mysql_dataadapter
+        /// The FL_MySql_DataAdapter
         /// </summary>
         /// <param name="Constring">The Constring<see cref="string"/></param>
         /// <param name="SqlCommand">The SqlCommand<see cref="string"/></param>

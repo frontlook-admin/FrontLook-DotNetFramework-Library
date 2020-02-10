@@ -3,6 +3,6 @@
     public static class FL_strings
     {
         public const string Space = "";
-        public const string Enter = "";
+        public const string Enter = "<br />";
     }
 }

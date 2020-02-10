@@ -125,7 +125,7 @@
         /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
         /// <param name="Query">The Query<see cref="string"/></param>
         /// <returns>The <see cref="int"/></returns>
-        public static int ExecuteCommand(MySqlConnection Con, MySqlCommand Cmd, string Query)
+        public static int ExecuteCommand(this MySqlCommand Cmd, MySqlConnection Con, string Query)
         {
             return Cmd.ExecuteMySqlCommand(Query, Con);
         }
@@ -166,10 +166,11 @@
         /// <param name="Cmd">The Cmd<see cref="MySqlCommand"/></param>
         /// <param name="Query">The Query<see cref="string"/></param>
         /// <param name="Con">The Con<see cref="MySqlConnection"/></param>
+        /// <param name="ParameterName"></param>
         /// <returns>The <see cref="string"/></returns>
-        public static string GetValue(this MySqlCommand Cmd, string Query, MySqlConnection Con)
+        public static string GetValue(this MySqlCommand Cmd, string Query, MySqlConnection Con, string ParameterName)
         {
-            return Cmd.GetMySqlValue(Query, Con);
+            return Cmd.GetMySqlValue(Query, Con, ParameterName);
         }
 
         /// <summary>
@@ -251,6 +252,109 @@
             string TableName, string ColumnName)
         {
             return Cmd.FL_MySql_Check_Column_Exists(Con, Database_Name, TableName, ColumnName);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnCount
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        public static int FL_Get_ColumnCount(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, string AntiColumnParameter = null)
+        {
+            return cmd.FL_MySqlGet_ColumnCount(con, DatabaseName, TableName, AntiColumnParameter);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnCount
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithCountParameter">The QueryWithCountParameter<see cref="string"/></param>
+        /// <param name="CountParameterName">The CountParameterName<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        public static int FL_Get_ColumnCount(this MySqlCommand cmd, MySqlConnection con, string QueryWithCountParameter, string CountParameterName)
+        {
+            return cmd.FL_MySqlGet_ColumnCount(con, QueryWithCountParameter, CountParameterName);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithCountParameter">The QueryWithCountParameter<see cref="string"/></param>
+        /// <param name="CountParameterName">The CountParameterName<see cref="string"/></param>
+        /// <param name="QueryWithColumnParameter">The QueryWithColumnParameter<see cref="string"/></param>
+        /// <param name="ColumnParameterName">The ColumnParameterName<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_Get_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithCountParameter, string CountParameterName, string QueryWithColumnParameter,
+            string ColumnParameterName)
+        {
+            return cmd.FL_MySqlGet_ColumnNames(con, QueryWithCountParameter, CountParameterName,
+                QueryWithColumnParameter, ColumnParameterName);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="QueryWithColumnParameter">The QueryWithColumnParameter<see cref="string"/></param>
+        /// <param name="ColumnParameterName">The ColumnParameterName<see cref="string"/></param>
+        /// <param name="ColumnCount">The ColumnCount<see cref="int"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_Get_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithColumnParameter, string ColumnParameterName, int ColumnCount)
+        {
+            return cmd.FL_MySqlGet_ColumnNames(con, QueryWithColumnParameter, ColumnParameterName,
+                ColumnCount);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_Get_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, string AntiColumnParameter = null)
+        {
+            return cmd.FL_MySqlGet_ColumnNames(con, DatabaseName, TableName, AntiColumnParameter);
+        }
+
+        /// <summary>
+        /// The FL_Get_ColumnNames
+        /// </summary>
+        /// <param name="cmd">The cmd<see cref="MySqlCommand"/></param>
+        /// <param name="con">The con<see cref="MySqlConnection"/></param>
+        /// <param name="DatabaseName">The DatabaseName<see cref="string"/></param>
+        /// <param name="TableName">The TableName<see cref="string"/></param>
+        /// <param name="ColumnCount">The ColumnCount<see cref="int"/></param>
+        /// <param name="AntiColumnParameter">The AntiColumnParameter<see cref="string"/></param>
+        /// <returns>The <see cref="string[]"/></returns>
+        public static string[] FL_Get_ColumnNames(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, int ColumnCount = 0, string AntiColumnParameter = null)
+        {
+            if (ColumnCount != 0)
+            {
+                return cmd.FL_MySqlGet_ColumnNames(con, DatabaseName, TableName,
+                    ColumnCount, AntiColumnParameter);
+            }
+            else
+            {
+
+                return cmd.FL_MySqlGet_ColumnNames(con, DatabaseName, TableName,
+                    AntiColumnParameter);
+            }
         }
     }
 }
