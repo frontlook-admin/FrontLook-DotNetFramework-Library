@@ -29,7 +29,7 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_Controls
         /// <returns>The <see cref="string"/></returns>
         public static string FL_GetControlString(Control ParentControl, string ChildId, string Ddl_String_Reqd = null)
         {
-            var ChildControl = FL_GetChildControl(ParentControl, ChildId);
+            var ChildControl = FL_GetChildControl(ParentControl, ChildId.Replace(" ",""));
             switch (ChildControl)
             {
                 case ITextControl Control:

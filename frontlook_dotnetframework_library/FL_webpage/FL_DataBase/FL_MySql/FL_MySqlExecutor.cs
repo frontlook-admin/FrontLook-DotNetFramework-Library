@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using _controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_Control;
+using _Controls = frontlook_dotnetframework_library.FL_webpage.FL_Controls.FL_Control;
 
 namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
 {
@@ -436,12 +436,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             if (string.IsNullOrEmpty(AntiColumnParameter))
             {
                 command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
-                          DatabaseName + "' AND TABLE_NAME='" + TableName + "';";
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' ORDER BY ORDINAL_POSITION;";
             }
             else
             {
                 command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
-                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "');";
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "') ORDER BY ORDINAL_POSITION;";
             }
             cmd.CommandText = command;
             var i = 0;
@@ -476,12 +476,12 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             if (string.IsNullOrEmpty(AntiColumnParameter))
             {
                 command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
-                          DatabaseName + "' AND TABLE_NAME='" + TableName + "';";
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' ORDER BY ORDINAL_POSITION;";
             }
             else
             {
                 command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
-                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "');";
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "') ORDER BY ORDINAL_POSITION;";
             }
             cmd.CommandText = command;
             var i = 0;
@@ -497,6 +497,88 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             reader.Dispose();
             con.Con_switch();
             return ColumnNames;
+        }
+
+        public static string[] FL_MySqlGet_ControlIds(this MySqlCommand cmd, MySqlConnection con,
+            string QueryWithColumnParameter, string ColumnParameterName, int ColumnCount)
+        {
+            var ControlIds = new string[ColumnCount];
+            cmd.CommandText = QueryWithColumnParameter;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ControlIds[i] = reader[ColumnParameterName].ToString().Replace(" ", "");
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ControlIds;
+        }
+
+        public static string[] FL_MySqlGet_ControlIds(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, int ColumnCount, string AntiColumnParameter = null)
+        {
+            var ControlIds = new string[ColumnCount];
+            string command;
+            if (string.IsNullOrEmpty(AntiColumnParameter))
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' ORDER BY ORDINAL_POSITION;";
+            }
+            else
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "') ORDER BY ORDINAL_POSITION;";
+            }
+            cmd.CommandText = command;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ControlIds[i] = reader["c"].ToString().Replace(" ", "");
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ControlIds;
+        }
+
+        public static string[] FL_MySqlGet_ControlIds(this MySqlCommand cmd, MySqlConnection con,
+            string DatabaseName, string TableName, string AntiColumnParameter = null)
+        {
+            var ControlIds = new string[cmd.FL_MySqlGet_ColumnCount(con, DatabaseName, TableName, AntiColumnParameter)];
+            string command;
+            if (string.IsNullOrEmpty(AntiColumnParameter))
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' ORDER BY ORDINAL_POSITION;";
+            }
+            else
+            {
+                command = "SELECT COLUMN_NAME as c FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='" +
+                          DatabaseName + "' AND TABLE_NAME='" + TableName + "' AND COLUMN_NAME NOT IN (SELECT '" + AntiColumnParameter + "') ORDER BY ORDINAL_POSITION;";
+            }
+            cmd.CommandText = command;
+            var i = 0;
+            cmd.Connection = con;
+            con.Con_switch();
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                ControlIds[i] = reader["c"].ToString().Replace(" ", "");
+                i++;
+            }
+            reader.Close();
+            reader.Dispose();
+            con.Con_switch();
+            return ControlIds;
         }
 
         /// <summary>
@@ -539,9 +621,148 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
             return q;
         }
 
-       public static string FL_MySql_ColumnValueElementBuilder(Control ParentControl, int count, IReadOnlyList<string> ChildControlIds)
+       public static string FL_MySql_ColumnValueElementBuilder(Control ParentControl, int Count, IReadOnlyList<string> ChildControlIds)
         {
-            const string b = "'";
+            //int Count, IReadOnlyList<string> Ids, Control ParentControl
+            const string c = "'";
+            const string a = "','";
+            const string d = ",'";
+            const string f = "',";
+            const string e = ",";
+            var q = "";
+            for (var b = 0; b <= (Count - 1); b++)
+            {
+                if (b == 0)
+                {
+                    if (Count == 1)
+                    {
+                        if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ITextControl)
+                        {
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + c + ctrl.Text + c;
+                        }
+                        else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ICheckBoxControl)
+                        {
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Checked;
+                        }
+                        else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is DropDownList)
+                        {
+                            var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + c + ctrl.SelectedValue + c;
+                        }
+                    }
+                    else
+                    {
+                        if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ITextControl)
+                        {
+                            if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                            {
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + c + ctrl.Text + f;
+                            }
+                            else
+                            {
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + c + ctrl.Text + a;
+                            }
+
+                        }
+                        else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ICheckBoxControl)
+                        {
+                            if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                            {
+                                var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + ctrl.Checked + e;
+                            }
+                            else
+                            {
+                                var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + ctrl.Checked + d;
+                            }
+                        }
+                        else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is DropDownList)
+                        {
+                            if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                            {
+                                var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + c + ctrl.SelectedValue + f;
+                            }
+                            else
+                            {
+                                var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                                q = q + c + ctrl.Text + a;
+                            }
+                        }
+                    }
+                }
+                else if (b > 0 && Count > (b + 1))
+                {
+                    if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ITextControl)
+                    {
+                        if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                        {
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Text + f;
+                        }
+                        else
+                        {
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Text + a;
+                        }
+                    }
+                    else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ICheckBoxControl)
+                    {
+                        if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                        {
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Checked + e;
+                        }
+                        else
+                        {
+                            var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Checked + d;
+                        }
+                    }
+                    else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is DropDownList)
+                    {
+                        if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b + 1]) is ICheckBoxControl)
+                        {
+                            var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.SelectedValue + f;
+                        }
+                        else
+                        {
+                            var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                            q = q + ctrl.Text + a;
+                        }
+                    }
+                }
+                else if (b > 0 && Count == (b + 1))
+                {
+                    if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ITextControl)
+                    {
+                        var ctrl = (ITextControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                        q = q + ctrl.Text + c;
+                    }
+                    else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is ICheckBoxControl)
+                    {
+                        var ctrl = (ICheckBoxControl)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                        q = q + ctrl.Checked;
+                    }
+                    else if (_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]) is DropDownList)
+                    {
+                        var ctrl = (DropDownList)_Controls.FL_GetChildControl(ParentControl, ChildControlIds[b]);
+                        q = q + ctrl.SelectedValue + c;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return q;
+            /*const string b = "'";
             const string a = "','";
             var q = "";
             for (var i = 0; i <= (count - 1); i++)
@@ -575,8 +796,8 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
                     break;
                 }
             }
-            return q;
-        }
+            return q;*/
+       }
 
        public static string FL_MySql_InsertQueryBuilder(int count, IReadOnlyList<string> ColumnNames,
             Control ParentControl, IReadOnlyList<string> ChildControlIds,string DataBaseName,
@@ -602,23 +823,23 @@ namespace frontlook_dotnetframework_library.FL_webpage.FL_DataBase.FL_MySql
                 {
                     if (count == 1)
                     {
-                        v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                        v = _Controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
                         q = c + ColumnNames[j] + b + v;
                     }
                     else
                     {
-                        v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                        v = _Controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
                         q = c + ColumnNames[j] + b + v + a;
                     }
                 }
                 else if (j > 0 && count > (j + 1))
                 {
-                    v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                    v = _Controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
                     q = q + ColumnNames[j] + b + v + a;
                 }
                 else if (j > 0 && count == (j + 1))
                 {
-                    v = _controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
+                    v = _Controls.FL_GetControlString(ParentControl, controlids[j]).Trim();
                     q = "UPDATE `"+DataBaseName+"`.`"+TableName+"` SET " + q + ColumnNames[j] + b + v + " WHERE " + WhereParameter + "; ";
                 }
             }

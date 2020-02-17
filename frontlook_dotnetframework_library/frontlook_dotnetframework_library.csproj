@@ -148,6 +148,7 @@
     <Compile Include="FL_webpage\FL_Controls\FL_Control.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_CheckBox.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_DropDownList.cs" />
+    <Compile Include="FL_webpage\FL_Controls\FL_Label_FileUpload.cs" />
     <Compile Include="FL_webpage\FL_Controls\FL_Label_TextBox.cs" />
     <Compile Include="FL_webpage\FL_DataBase\FL_MySql\FL_MySqlExecutor.cs" />
     <Compile Include="FL_webpage\FL_DataBase\FL_Odbc\FL_OdbcExecutor.cs" />
