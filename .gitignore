@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/frontlook_dotnetframework_library/..Debug/v480

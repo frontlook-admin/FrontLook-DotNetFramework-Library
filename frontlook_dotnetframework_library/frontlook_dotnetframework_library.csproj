@@ -43,7 +43,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>frontlook_signature.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>frontlook_signature_rider.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -199,7 +199,7 @@
       <Link>.editorconfig</Link>
     </None>
     <None Include="App.config" />
-    <None Include="frontlook_signature.pfx" />
+    <None Include="frontlook_signature_rider.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
